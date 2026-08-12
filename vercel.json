@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/diagnostico", "destination": "/dx-digital-smile-ortodoncia.html" },
+    { "source": "/dashboard", "destination": "/dashboard-operativo-id-smile.html" },
+    { "source": "/bmc", "destination": "/business-model-canvas-id-smile.html" }
+  ]
+}
