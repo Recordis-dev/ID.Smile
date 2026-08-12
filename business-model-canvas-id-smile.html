@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Model Canvas — ID Smile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --xray:#0C242B; --petrol:#14515C; --aqua:#2E9AA0; --liga:#D2506B; --ambar:#D08A32;
+  --enamel:#FAF7F2; --enamel-2:#F0EBE3; --ink:#131A1D; --ink-soft:#5A6A70;
+  --line:#DFD8CE; --line-dark:#1D4451; --r:3px;
+  --display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --body:'Public Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--enamel);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px 60px}
+header.hero{background:var(--xray);color:var(--enamel);padding:38px 0 30px}
+.brandbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8FB6BD}
+.brandbar b{color:var(--enamel)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.8vw,38px);letter-spacing:-.025em;margin:16px 0 6px}
+.sub{color:#B9D3D8;max-width:70ch;margin:0;font-size:14.5px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-family:var(--mono);font-size:10.5px;color:#A6C7CD}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+.canvas{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto auto;gap:12px;margin-top:34px}
+.block{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.block h3{font-family:var(--display);font-size:13.5px;font-weight:700;margin:0 0 3px;letter-spacing:-.005em;color:var(--ink)}
+.block .num{font-family:var(--mono);font-size:9.5px;color:var(--ink-soft);letter-spacing:.08em}
+.block ul{margin:10px 0 0;padding-left:16px}
+.block li{font-size:12px;color:var(--ink-soft);margin-bottom:7px;line-height:1.35}
+.block li.nuevo{color:var(--ink)}
+.tag-nuevo{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.06em;text-transform:uppercase;background:var(--liga);color:#fff;padding:1px 6px;border-radius:99px;margin-left:5px;vertical-align:1px}
+
+.b-partners{grid-column:1;grid-row:1/3}
+.b-activities{grid-column:2;grid-row:1}
+.b-resources{grid-column:2;grid-row:2}
+.b-value{grid-column:3;grid-row:1/3;background:var(--petrol);border-color:var(--petrol)}
+.b-value h3, .b-value .num{color:#fff}
+.b-value li{color:#CFE6E9}
+.b-value li.nuevo{color:#fff}
+.b-relations{grid-column:4;grid-row:1}
+.b-channels{grid-column:4;grid-row:2}
+.b-segments{grid-column:5;grid-row:1/3}
+.b-costs{grid-column:1/4;grid-row:3}
+.b-revenue{grid-column:4/6;grid-row:3}
+
+@media(max-width:980px){
+  .canvas{grid-template-columns:1fr 1fr}
+  .b-partners{grid-column:1;grid-row:1}
+  .b-activities{grid-column:2;grid-row:1}
+  .b-resources{grid-column:1;grid-row:2}
+  .b-value{grid-column:2;grid-row:2}
+  .b-relations{grid-column:1;grid-row:3}
+  .b-channels{grid-column:2;grid-row:3}
+  .b-segments{grid-column:1/3;grid-row:4}
+  .b-costs{grid-column:1/3;grid-row:5}
+  .b-revenue{grid-column:1/3;grid-row:6}
+}
+
+.note{font-size:12.5px;color:var(--ink-soft);margin-top:24px;padding:14px 16px;background:#fff;border:1px dashed var(--ambar);border-radius:var(--r);max-width:90ch}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:20px 0 0;font-family:var(--mono);font-size:11px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandbar">
+      <span>diagnosticadoc<b>.com</b> · Business Model Canvas</span>
+      <span>Expediente <b>ODO-001</b></span>
+    </div>
+    <h1>ID Smile — Cuernavaca, Morelos</h1>
+    <p class="sub">Lo que ya existe en el modelo de negocio de la clínica, y lo que la estrategia digital añade sobre eso — marcado explícitamente, para que quede claro qué es nuevo y qué no.</p>
+    <div class="legend">
+      <span><span class="sw" style="background:#7FA7AE"></span>Ya existe</span>
+      <span><span class="sw" style="background:var(--liga)"></span>Añade la estrategia digital</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="canvas">
+
+    <div class="block b-partners">
+      <div class="num">01</div><h3>Socios clave</h3>
+      <ul>
+        <li>Hospital San Diego (consultorio dentro de la torre médica)</li>
+        <li>Distribuidores de brackets y alineadores</li>
+        <li class="nuevo">Grow Flow Automation — gestión digital y medición<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Laboratorio dental para casos de alineadores<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-activities">
+      <div class="num">02</div><h3>Actividades clave</h3>
+      <ul>
+        <li>Consultas de valoración y tratamiento de ortodoncia</li>
+        <li>Seguimiento clínico mensual de casos activos</li>
+        <li class="nuevo">Gestión de ficha de Google y solicitud de reseñas<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Producción de contenido educativo y antes/después<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Medición semanal de conversación → cita → tratamiento<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-resources">
+      <div class="num">03</div><h3>Recursos clave</h3>
+      <ul>
+        <li>Dos titulares con cédula y formación en ortodoncia</li>
+        <li>Consultorio equipado en la Torre Médica San Diego</li>
+        <li class="nuevo">Sitio web propio con agendamiento por WhatsApp<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Ficha de Google Business Profile gestionada<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Base de pacientes con origen y etapa rastreados<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-value">
+      <div class="num">04</div><h3>Propuesta de valor</h3>
+      <ul>
+        <li>Ortodoncia especializada dentro de un hospital — supervisión profesional continua, no solo escaneo remoto</li>
+        <li>Trato personal directo de los titulares, difícil de replicar por cadenas</li>
+        <li class="nuevo">Encontrable por nombre, por Google Maps y por búsqueda de tratamiento<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Respuesta a consultas en menos de 15 minutos<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Autoridad clínica visible antes de la primera llamada<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-relations">
+      <div class="num">05</div><h3>Relación con clientes</h3>
+      <ul>
+        <li>Atención personal en consultorio</li>
+        <li>Recomendación boca a boca de pacientes actuales</li>
+        <li class="nuevo">Seguimiento automatizado a 72h para quien no agenda<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Recordatorios automáticos de cita (reduce no-show)<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Programa de referidos con incentivo definido<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-channels">
+      <div class="num">06</div><h3>Canales</h3>
+      <ul>
+        <li>Boca a boca / recomendación de pacientes</li>
+        <li>Página de Facebook (existente, por corregir)</li>
+        <li class="nuevo">Ficha de Google Business Profile<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">WhatsApp Business con catálogo y respuestas rápidas<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Landing pages por tratamiento + campaña de búsqueda<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-segments">
+      <div class="num">07</div><h3>Segmentos de clientes</h3>
+      <ul>
+        <li>Adultos 25–45 años en Cuernavaca buscando ortodoncia estética</li>
+        <li>Familias con niños que requieren ortopedia maxilar</li>
+        <li>Pacientes referidos por el propio Hospital San Diego</li>
+        <li class="nuevo">Pacientes que buscan activamente en Google/redes y hoy encuentran a la competencia primero<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-costs">
+      <div class="num">08</div><h3>Estructura de costos</h3>
+      <ul>
+        <li>Renta del consultorio en la Torre Médica San Diego</li>
+        <li>Insumos de brackets/alineadores por caso (cotizar localmente — sin benchmark citable confiable)</li>
+        <li>Personal auxiliar</li>
+        <li class="nuevo">Gestión digital mensual — referencia: ~$1,500–4,500 MXN/mes<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Inversión inicial del sistema — referencia: ~$18,900 MXN<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Presupuesto de pauta pagada (piloto, desde Fase 3)<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+    <div class="block b-revenue">
+      <div class="num">09</div><h3>Fuentes de ingreso</h3>
+      <ul>
+        <li>Tratamientos de ortodoncia (brackets, alineadores) — ref. sector $15,000–$80,000 MXN por caso</li>
+        <li>Consultas de valoración — ref. sector $350–$700 MXN</li>
+        <li class="nuevo">Casos adicionales por captación medible y respuesta rápida<span class="tag-nuevo">nuevo</span></li>
+        <li class="nuevo">Referidos rastreados con origen conocido<span class="tag-nuevo">nuevo</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <p class="note"><strong>Nota metodológica.</strong> Los bloques marcados "ya existe" están basados en evidencia confirmada o en inferencia razonable de cómo opera un consultorio de especialidad dentro de un hospital. Los montos de costos e ingresos son referencias del sector (ver <code>analytics-kpis-instrumentacion.md</code> y <code>references/benchmarks-dental-mx.md</code> del skill diagnosticadoc), no cifras confirmadas de ID Smile — se calibran con la evidencia real en la llamada de la Fase 0.</p>
+</div>
+
+<footer class="wrap">
+  <span>diagnosticadoc.com — Dx digital para Dr@s · Grow Flow Automation</span>
+  <span>BMC v1 · basado en Business Model Canvas (Osterwalder)</span>
+</footer>
+</body>
+</html>

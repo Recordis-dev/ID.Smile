@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "/(index|index.html)",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/dx",
+      "dest": "/dx-digital-smile-ortodoncia.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard-operativo-id-smile.html"
+    },
+    {
+      "src": "/bmc",
+      "dest": "/business-model-canvas-id-smile.html"
+    },
+    {
+      "src": "/hub",
+      "dest": "/hub.html"
+    }
+  ]
+}
