@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard operativo — ID Smile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --xray:#0C242B; --xray-2:#11333C; --petrol:#14515C; --aqua:#2E9AA0;
+  --liga:#D2506B; --ambar:#D08A32; --enamel:#FAF7F2; --enamel-2:#F0EBE3;
+  --ink:#131A1D; --ink-soft:#5A6A70; --line:#DFD8CE; --line-dark:#1D4451; --r:3px;
+  --display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --body:'Public Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--enamel);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px 70px}
+header.hero{background:var(--xray);color:var(--enamel);padding:40px 0 34px}
+.brandbar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8FB6BD}
+.brandbar b{color:var(--enamel)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,42px);letter-spacing:-.025em;margin:18px 0 6px}
+.sub{color:#B9D3D8;max-width:60ch;margin:0;font-size:15px}
+.chiprow{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 0}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--line-dark);border-radius:99px;color:#A6C7CD}
+.chip.live{border-color:var(--aqua);color:var(--aqua)}
+.chip.live:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--aqua);margin-right:7px;animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+section{padding:44px 0 0}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--liga);display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.eyebrow:after{content:"";flex:1;height:1px;background:var(--line)}
+h2{font-family:var(--display);font-size:clamp(21px,2.8vw,28px);font-weight:700;letter-spacing:-.02em;margin:0 0 6px}
+.lede{color:var(--ink-soft);max-width:72ch;margin:0 0 20px;font-size:14.5px}
+
+/* KPI cards */
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.kpi-c{background:#fff;padding:18px}
+.kpi-c .kl{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--liga)}
+.kpi-c .kv{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.02em;margin:8px 0 3px}
+.kpi-c .km{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)}
+
+/* devlog */
+.devlog{border-left:2px solid var(--line);padding-left:22px;margin-left:6px}
+.dl-item{position:relative;padding-bottom:22px}
+.dl-item:last-child{padding-bottom:0}
+.dl-item:before{content:"";position:absolute;left:-27.5px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--petrol);border:2px solid var(--enamel)}
+.dl-item .dt{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.04em}
+.dl-item h4{font-family:var(--display);font-size:15px;font-weight:600;margin:3px 0 4px;letter-spacing:-.01em}
+.dl-item p{margin:0;font-size:13.6px;color:var(--ink-soft);max-width:74ch}
+.dl-item .tag{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--enamel-2);color:var(--ink-soft)}
+.dl-item .tag.done{background:var(--aqua);color:#fff}
+.dl-item .tag.pending{background:var(--enamel-2);color:var(--liga);border:1px dashed var(--liga)}
+
+/* gap analysis table */
+table.gap{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line)}
+table.gap th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);padding:10px 14px;border-bottom:1px solid var(--line);background:var(--enamel-2)}
+table.gap td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:13.5px;vertical-align:top}
+table.gap tr:last-child td{border-bottom:0}
+.sev{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;color:#fff;white-space:nowrap}
+.sev.alta{background:var(--liga)}
+.sev.media{background:var(--ambar)}
+.sev.baja{background:var(--ink-soft)}
+td.area{font-family:var(--display);font-weight:600;font-size:14px;white-space:nowrap}
+
+/* gantt (static, reused pattern) */
+.gantt{border:1px solid var(--line);background:#fff;padding:20px;overflow-x:auto}
+.gantt table{border-collapse:collapse;width:100%;min-width:680px}
+.gantt th{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--ink-soft);font-weight:400;padding:0 0 8px;text-align:center;border-bottom:1px solid var(--line)}
+.gantt th:first-child{text-align:left;width:190px}
+.gantt td{padding:6px 0;border-bottom:1px solid var(--enamel-2)}
+.gantt td:first-child{font-size:13.5px;font-weight:500;padding-right:12px}
+.gbar{height:16px;border-radius:2px;background:var(--petrol)}
+.gbar.a2{background:#1D6B72}.gbar.a3{background:var(--aqua)}.gbar.a4{background:var(--liga)}
+
+.note{font-size:12.5px;color:var(--ink-soft);margin-top:12px;padding-left:12px;border-left:2px solid var(--ambar)}
+footer{border-top:1px solid var(--line);margin-top:56px;padding:22px 0 0;font-family:var(--mono);font-size:11px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandbar">
+      <span>diagnosticadoc<b>.com</b> · Dashboard operativo</span>
+      <span>Expediente <b>ODO-001</b></span>
+    </div>
+    <h1>ID Smile — Cuernavaca, Morelos</h1>
+    <p class="sub">Documento de trabajo interno: qué se investigó, qué se encontró, qué falta, y el cronograma que ordena todo. No es material de venta — es la bitácora del proceso.</p>
+    <div class="chiprow">
+      <span class="chip live">Fase 0 · investigación completada</span>
+      <span class="chip">Dra. Esbreidy Lugo Delgado</span>
+      <span class="chip">Odont. Benjamín Avendaño Peralta</span>
+      <span id="fecha" class="chip">—</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <div class="eyebrow">Signos vitales — línea base</div>
+  <h2>Lo único medido hasta ahora</h2>
+  <p class="lede">La mayoría sigue en blanco a propósito: es exactamente lo que confirma que todavía no hay instrumentación, y es el primer entregable de la Fase 1.</p>
+  <div class="kpi">
+    <div class="kpi-c"><div class="kl">Reseñas en Facebook</div><div class="kv">1</div><div class="km">sin calificar · ref. sector ≥30</div></div>
+    <div class="kpi-c"><div class="kl">Calificación Google</div><div class="kv">—</div><div class="km">sin ficha localizada</div></div>
+    <div class="kpi-c"><div class="kl">1ª respuesta WhatsApp</div><div class="kv">—</div><div class="km">sin medir · meta &lt;15 min</div></div>
+    <div class="kpi-c"><div class="kl">Citas agendadas / mes</div><div class="kv">—</div><div class="km">línea base pendiente</div></div>
+    <div class="kpi-c"><div class="kl">Origen rastreado</div><div class="kv">0%</div><div class="km">meta: 100% de las citas</div></div>
+    <div class="kpi-c"><div class="kl">Competidor con reseñas</div><div class="kv">~70–80</div><div class="km">Smile Cuernavaca® (ref.)</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Devlog</div>
+  <h2>Bitácora del proceso</h2>
+  <p class="lede">Cada paso, con lo que produjo. Sirve como prueba de rigor si se comparte con la clínica, y como memoria de trabajo del equipo.</p>
+  <div class="devlog" id="devlog"></div>
+</section>
+
+<section>
+  <div class="eyebrow">Gap analysis</div>
+  <h2>Brechas por área, con severidad</h2>
+  <p class="lede">La severidad determina el orden de trabajo, no la conveniencia. Alta severidad se resuelve en la Fase 1 sin excepción.</p>
+  <table class="gap" id="gapTable">
+    <thead><tr><th>Área</th><th>Hallazgo</th><th>Severidad</th><th>Acción</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section>
+  <div class="eyebrow">Cronograma</div>
+  <h2>12 semanas</h2>
+  <div class="gantt">
+    <table>
+      <thead><tr><th>Fase</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th><th>S7</th><th>S8</th><th>S9</th><th>S10</th><th>S11</th><th>S12</th></tr></thead>
+      <tbody id="ganttBody"></tbody>
+    </table>
+  </div>
+  <p class="note">Revisión de avance en llamada quincenal de 30 minutos. El detalle de entregables por fase está en el expediente de diagnóstico (dx-digital-smile-ortodoncia.html) y en el pitch deck.</p>
+</section>
+
+</div>
+
+<footer class="wrap">
+  <span>diagnosticadoc.com — Dx digital para Dr@s · Grow Flow Automation</span>
+  <span>Dashboard v1 · uso interno</span>
+</footer>
+
+<script>
+document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'});
+
+const devlog = [
+  {dt:"Fase 0 · Paso 1", t:"Auditoría de contexto disponible", tag:"done",
+   d:"Revisión de las URLs proporcionadas (Facebook /ortodoncia.smile, Instagram @id.smiles, enlace de Google compartido). Confirmado: la página de Facebook muestra el nombre \"ID Smile\" — distinto al handle de la URL."},
+  {dt:"Fase 0 · Paso 2", t:"Identificación de la clínica y titulares", tag:"done",
+   d:"Triangulación por dirección y teléfono (Consultorio 315, Torre Médica San Diego) entre Facebook, directorio del Hospital San Diego y Doctoralia. Confirmados: Dra. Esbreidy Lugo Delgado y Odont. Benjamín Avendaño Peralta (céd. 09271434, ULA Campus Cuernavaca 2015/2017)."},
+  {dt:"Fase 0 · Paso 3", t:"Benchmarks del vertical dental/ortodoncia en México", tag:"done",
+   d:"Precios de tratamiento 2025-2026, no-show y efecto de recordatorios, penetración de WhatsApp (93%), speed-to-lead (HBR/MIT), y restricciones COFEPRIS. Consolidado en references/benchmarks-dental-mx.md del skill diagnosticadoc."},
+  {dt:"Fase 0 · Paso 4", t:"Panorama competitivo y contexto de mercado", tag:"done",
+   d:"Identificados Smile Cuernavaca® (competidor directo, ~70-80 reseñas), Dentalia (cadena nacional) y Moons (alineadores DTC, sin sede confirmada en Cuernavaca). Población de referencia: Cuernavaca 378,476 hab., Morelos 1.97M hab. (INEGI)."},
+  {dt:"Fase 0 · Paso 5", t:"Verificación de Instagram, Google Business Profile y Meta Ad Library", tag:"pending",
+   d:"No se pudo confirmar la propiedad de @id.smiles, no se localizó ficha de Google Maps propia, y no fue posible acceder a Meta Ad Library de forma automatizada. Los tres requieren verificación manual directa antes de cerrar el expediente."},
+  {dt:"Siguiente", t:"Llamada de 15 minutos con la clínica", tag:"pending",
+   d:"Cerrar los pendientes de arriba y capturar: pacientes nuevos/mes, ticket promedio real, quién gestiona el WhatsApp y consentimiento para casos antes/después."},
+];
+document.getElementById('devlog').innerHTML = devlog.map(x =>
+  `<div class="dl-item"><div class="dt">${x.dt}</div><h4>${x.t}</h4><p>${x.d}</p><span class="tag ${x.tag}">${x.tag==='done'?'Completado':'Pendiente'}</span></div>`
+).join('');
+
+const gaps = [
+  ["Identidad de marca", "El nombre mostrado en Facebook (\"ID Smile\") no coincide con la URL pública (/ortodoncia.smile); categoría configurada como blanqueamiento, no ortodoncia.", "alta", "Unificar nombre, handle y categoría en la Fase 1, semana 1."],
+  ["Ficha de Google", "No se localizó una ficha de Google Business Profile propia y gestionada — el canal que revisa primero el 85% de quienes buscan dentista.", "alta", "Crear/reclamar la ficha con categoría, horarios y 20 fotos en la semana 1."],
+  ["Reseñas", "Solo 1 reseña sin calificar en Facebook, frente a ~70-80 del competidor directo (Smile Cuernavaca®).", "alta", "Sistema de solicitud post-cita (QR + secuencia) desde la Fase 2."],
+  ["Instagram", "No se pudo confirmar que @id.smiles pertenezca a la clínica.", "media", "Verificar manualmente; si no es propio, crear un handle consistente con Facebook."],
+  ["Sitio web propio", "No se detectó dominio propio; usan correo Gmail en vez de correo con dominio propio.", "media", "Construir sitio de 4 secciones con agendamiento por WhatsApp en la Fase 1."],
+  ["Medición", "Sin instrumentación de ningún tipo: no hay forma de saber qué canal trae pacientes.", "alta", "Instalar seguimiento de clics a WhatsApp, llamadas y formularios en la semana 1."],
+  ["WhatsApp / tiempo de respuesta", "Sin cuenta Business confirmada ni tiempo de respuesta medido — el KPI de mayor apalancamiento del sistema.", "media", "Configurar WhatsApp Business y medir línea base en la semana 1."],
+  ["Pauta pagada", "Sin evidencia de campañas en Meta Ad Library.", "baja", "No es prioridad — no invertir en pauta hasta cerrar Fases 1 y 2."],
+];
+const sevLabel = {alta:"Alta", media:"Media", baja:"Baja"};
+document.querySelector('#gapTable tbody').innerHTML = gaps.map(g =>
+  `<tr><td class="area">${g[0]}</td><td>${g[1]}</td><td><span class="sev ${g[2]}">${sevLabel[g[2]]}</span></td><td>${g[3]}</td></tr>`
+).join('');
+
+const rows = [
+  {t:'Fase 1 · Alineación', s:1, e:3, c:''},
+  {t:'Fase 2 · Nivelación', s:4, e:7, c:'a2'},
+  {t:'Fase 3 · Cierre de espacios', s:8, e:10, c:'a3'},
+  {t:'Fase 4 · Retención', s:11, e:12, c:'a4'}
+];
+document.getElementById('ganttBody').innerHTML = rows.map(r=>{
+  let td = '<td>'+r.t+'</td>';
+  for(let w=1; w<=12; w++) td += '<td>'+(w>=r.s&&w<=r.e ? '<div class="gbar '+r.c+'"></div>' : '')+'</td>';
+  return '<tr>'+td+'</tr>';
+}).join('');
+</script>
+</body>
+</html>
