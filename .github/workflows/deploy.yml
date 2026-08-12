@@ -83,13 +83,28 @@ jobs:
 
             if (isBot || isAutoImprove) {
               console.log(`PR #${pr.number} created by ${creator} matches bot approval criteria. Approving automatically...`);
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                event: 'APPROVE',
-                body: '🤖 **Automated Bot Approval**: All automated setup checks and validations have passed successfully. This pull request has been approved automatically for deployment.'
-              });
+              try {
+                await github.rest.pulls.createReview({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  event: 'APPROVE',
+                  body: '🤖 **Automated Bot Approval**: All automated setup checks and validations have passed successfully. This pull request has been approved automatically for deployment.'
+                });
+                console.log('✅ Successfully approved Pull Request.');
+              } catch (error) {
+                console.warn('⚠️ Warning: GitHub Actions does not have permission to approve PRs directly:');
+                console.warn(error.message);
+                console.log('Falling back to submitting an automated validation COMMENT on the PR...');
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: '🤖 **Automated Validation Passed**: All automated setup checks and validations have passed successfully.\n\n*Note: Automatic PR approval was skipped because GitHub Actions is not permitted to approve pull requests in this repository\'s settings. To enable direct approvals, go to **Settings > Actions > General > Workflow permissions** and check **Allow GitHub Actions to create and approve pull requests**.*'
+                });
+                console.log('✅ Fallback validation comment submitted successfully.');
+              }
             } else {
               console.log(`PR #${pr.number} created by ${creator} does not meet automated bot approval criteria. Skipping automatic approval.`);
             }
