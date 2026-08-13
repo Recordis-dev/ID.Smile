@@ -1,9 +1,35 @@
 {
+  "version": 2,
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/diagnostico", "destination": "/dx-digital-smile-ortodoncia.html" },
-    { "source": "/dashboard", "destination": "/dashboard-operativo-id-smile.html" },
-    { "source": "/bmc", "destination": "/business-model-canvas-id-smile.html" }
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/(index|index.html)",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/dx",
+      "dest": "/dx-digital-smile-ortodoncia.html"
+    },
+    {
+      "src": "/diagnostico",
+      "dest": "/dx-digital-smile-ortodoncia.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/dashboard-operativo-id-smile.html"
+    },
+    {
+      "src": "/bmc",
+      "dest": "/business-model-canvas-id-smile.html"
+    },
+    {
+      "src": "/hub",
+      "dest": "/hub.html"
+    }
   ]
 }
