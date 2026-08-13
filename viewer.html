@@ -630,6 +630,11 @@ iframe.preview-frame.mobile-mode {
     <div class="menu-group">
       <div class="menu-group-title">DOCUMENTACIÓN & ESTRATEGIA</div>
 
+      <a href="?doc=readme" class="menu-item" id="nav-readme">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3.5A2.5 2.5 0 0 1 6.5 1H20v21H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+        Blueprint y Onepager (README)
+      </a>
+
       <a href="?doc=wa" class="menu-item" id="nav-wa">
         <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         Abordaje y Oferta Bundle
@@ -778,6 +783,12 @@ const DOCUMENTS = {
     type: "md",
     url: "/DEPLOYMENT.md",
     badge: "DOCUMENTO DE ENTORNO"
+  },
+  readme: {
+    title: "Blueprint y Onepager (README)",
+    type: "md",
+    url: "/README.md",
+    badge: "ESPECIFICACIÓN PRINCIPAL"
   }
 };
 
@@ -854,6 +865,21 @@ function parseMarkdown(md) {
 
   // Code blocks (```lang ... ```)
   html = html.replace(/```(\w*)\n([\s\S]*?)\n```/g, function(match, lang, code) {
+    if (lang === 'xml' || lang === 'svg') {
+      // Decode entities robustly
+      let decoded = code
+        .replace(/&amp;lt;/g, '<')
+        .replace(/&lt;/g, '<')
+        .replace(/&amp;gt;/g, '>')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;amp;/g, '&')
+        .replace(/&amp;/g, '&');
+      if (decoded.indexOf('<svg') !== -1) {
+        // Remove blank lines inside the SVG block to prevent paragraph-split tearing
+        decoded = decoded.replace(/\n\s*\n/g, '\n');
+        return `<div style="margin: 24px 0; max-width: 100%; display: flex; justify-content: center; width: 100%;">${decoded}</div>`;
+      }
+    }
     return `<pre><code class="language-${lang}">${code}</code></pre>`;
   });
 
@@ -930,7 +956,7 @@ function parseMarkdown(md) {
   html = blocks.map(block => {
     let trimmed = block.trim();
     if (!trimmed) return '';
-    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr')) {
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr') || trimmed.startsWith('<div')) {
       return trimmed;
     }
     return `<p>${trimmed}</p>`;
