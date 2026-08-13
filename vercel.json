@@ -12,6 +12,10 @@
       "dest": "/dx-digital-smile-ortodoncia.html"
     },
     {
+      "src": "/diagnostico",
+      "dest": "/dx-digital-smile-ortodoncia.html"
+    },
+    {
       "src": "/dashboard",
       "dest": "/dashboard-operativo-id-smile.html"
     },
