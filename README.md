@@ -159,11 +159,12 @@ Ofrece un panel de control interactivo para interactuar directamente con los 10 
 * **Simulador de Dispositivo Dual:** Permite alternar la previsualización del sitio móvil y desktop dentro de un iframe interactivo con marcos realistas de hardware.
 * **Localhost Clean-URL Resolver:** Mapea automáticamente URLs limpias de producción (como `/dashboard`) a archivos locales reales (como `/dashboard-operativo-id-smile.html`) de forma transparente para simplificar el testing fuera del servidor edge.
 
-### 3. Seguridad de IP Médica en Servidor Edge & CI/CD
-Toda la documentación estratégica y los borradores clínicos están blindados contra indexación pública accidental:
-* **Privacidad de Extremo a Extremo:** Los archivos estratégicos, carpetas internas (`diagnosticadoc/*`) y documentos de diagnóstico clínico inyectan etiquetas meta `<meta name="robots" content="noindex, nofollow">`.
-* **Configuración del Servidor Edge:** El archivo `vercel.json` asocia la cabecera HTTP `X-Robots-Tag: noindex, nofollow` de manera granular a todos los subdirectorios internos y archivos Markdown.
-* **Pipeline CI/CD Robusto:** GitHub Actions ejecuta automáticamente `scripts/auto-setup.js` para asegurar que el **Vercel Plugin** y las herramientas de IA tengan el contexto listo para solucionar problemas, aprobando de forma automática los pull requests creados por bots o agentes dedicados a mejoras técnicas (*troubleshooting*).
+### 3. Seguridad de IP Médica, Gatekeeper & IP Shield (3 Capas)
+Toda la documentación estratégica, borradores de trabajo y entregables clínicos están blindados mediante una sofisticada **Arquitectura de Seguridad en 3 Capas** coordinada en `navigator.js`, documentada detalladamente en [SECURITY.md](SECURITY.md):
+* **Capa 1: Gatekeeper de Acceso (Passkey local):** Bloquea de inmediato las vistas internas (`hub`, `viewer`, `dx`, `dashboard`, `bmc`) ante usuarios no autenticados mediante ocultación temprana CSS, solicitando el passkey `IDS-JEDI-2026`. Admite autenticación automática y segura vía URL query params.
+* **Capa 2: Modo Stealth (Aislamiento Público):** El floating navigator de entregables es invisible en landings públicas (`index.html`, `v1.html`) de forma predeterminada, requiriendo de un doble click secreto o Shift+DblClick en el pie de página para activarse por prompt.
+* **Capa 3: IP Shielding & Prevención de Filtraciones:** Bloquea right-clicks, copiar/pegar (`copy`/`cut`), arrastrar (`dragstart`) e impresión (`@media print`), superponiendo un watermark diagonal vectorizado (`CONFIDENCIAL - ID SMILE WORKSPACE`) en todo el viewport de entregables.
+* **Seguridad de Servidor Edge & CI/CD:** El archivo `vercel.json` asocia cabeceras `X-Robots-Tag: noindex, nofollow` a nivel DNS y se complementa con etiquetas meta `<meta name="robots">` en HTML. El pipeline ejecuta de manera automatizada `scripts/auto-setup.js` para certificar la integridad de los recursos.
 
 ---
 
