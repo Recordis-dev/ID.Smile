@@ -883,8 +883,15 @@ btnMobile.addEventListener("click", () => {
 
 // ---------- Markdown Parser ----------
 function parseMarkdown(md) {
-  // Prevent script/HTML injection, except blockquotes, hr, etc
-  let html = md
+  const svgBlocks = [];
+  // 1. Pre-extract all raw <svg>...</svg> blocks to placeholders to protect them from HTML escaping
+  let parsedMd = md.replace(/<svg[\s\S]*?<\/svg>/gi, function(match) {
+    svgBlocks.push(match);
+    return `<!--SVG_BLOCK_PLACEHOLDER_${svgBlocks.length - 1}-->`;
+  });
+
+  // 2. Prevent script/HTML injection, except blockquotes, hr, etc
+  let html = parsedMd
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
@@ -988,11 +995,18 @@ function parseMarkdown(md) {
   html = blocks.map(block => {
     let trimmed = block.trim();
     if (!trimmed) return '';
-    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr') || trimmed.startsWith('<div')) {
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr') || trimmed.startsWith('<div') || trimmed.startsWith('<!--SVG_BLOCK_PLACEHOLDER_') || trimmed.startsWith('&lt;!--SVG_BLOCK_PLACEHOLDER_')) {
       return trimmed;
     }
     return `<p>${trimmed}</p>`;
   }).join('\n');
+
+  // 3. Re-inject raw SVG blocks into their corresponding placeholders
+  for (let j = 0; j < svgBlocks.length; j++) {
+    const rawSvg = svgBlocks[j];
+    html = html.replace(`&lt;!--SVG_BLOCK_PLACEHOLDER_${j}--&gt;`, `<div style="margin: 24px 0; max-width: 100%; display: flex; justify-content: center; width: 100%;">${rawSvg}</div>`);
+    html = html.replace(`<!--SVG_BLOCK_PLACEHOLDER_${j}-->`, `<div style="margin: 24px 0; max-width: 100%; display: flex; justify-content: center; width: 100%;">${rawSvg}</div>`);
+  }
 
   return html;
 }

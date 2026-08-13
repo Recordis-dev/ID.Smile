@@ -7,7 +7,6 @@ Ecosistema digital unificado para ID Smile, diseñado e implementado con una arq
 ## 🗺️ System Blueprint: Fullstack Architecture
 El siguiente diagrama describe la arquitectura general del sistema siguiendo las pautas de [Diagram Design de Cathryn Lavery](https://github.com/cathrynlavery/diagram-design), con un enfoque minimalista editorial, alineación precisa en grilla divisible por 4, tipografía Geist/Instrument Serif y énfasis focal selectivo.
 
-```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="blueprint-title blueprint-desc">
   <title id="blueprint-title">ID Smile Fullstack Blueprint</title>
   <desc id="blueprint-desc">Architectural blueprint of the ID Smile dual-version workspace ecosystem, built following professional diagram-design guidelines.</desc>
@@ -137,14 +136,12 @@ El siguiente diagrama describe la arquitectura general del sistema siguiendo las
   <text x="680" y="380" class="callout-text">X-Robots-Tag: noindex, nofollow</text>
   <text x="680" y="396" class="callout-text">headers at Vercel Edge</text>
 </svg>
-```
 
 ---
 
 ## 🗺️ Sitemap & User Flow Blueprint
 Este diagrama ilustra las rutas de usuario, la navegación interactiva, las secciones de contenido de la marca (áreas), los llamados a la acción (CTAs) y cómo se interconectan los entregables dentro de la plataforma.
 
-```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="sitemap-title">
   <title id="sitemap-title">ID Smile Sitemap &amp; Flow Blueprint</title>
   <defs>
@@ -269,14 +266,12 @@ Este diagrama ilustra las rutas de usuario, la navegación interactiva, las secc
   <path d="M 656 372 L 684 372" class="edge-focal" />
   <path d="M 656 240 L 684 240" class="edge-accent" />
 </svg>
-```
 
 ---
 
 ## 🗺️ Repository Directory Structure & Tech Stack
 Este diagrama de arquitectura técnica representa la estructura del repositorio de código estático, la organización de archivos de ID Smile y Diagnosticadoc, y el stack tecnológico utilizado en cada capa.
 
-```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="repo-title">
   <title id="repo-title">ID Smile Repository Structure Blueprint</title>
   <defs>
@@ -371,14 +366,12 @@ Este diagrama de arquitectura técnica representa la estructura del repositorio 
   <path d="M 280 328 L 304 328" class="edge" />
   <path d="M 520 272 L 544 272" class="edge" />
 </svg>
-```
 
 ---
 
 ## 🗺️ CI/CD Deployment Pipeline & Multi-Cloud Architecture
 Este blueprint muestra el ciclo de vida del despliegue, la validación estática paralela de código, y cómo se aprovisionan y sincronizan los hosts redundantes (Vercel Edge y GitHub Pages) para garantizar tolerancia a fallos.
 
-```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="deploy-title">
   <title id="deploy-title">ID Smile Deployment Pipeline Blueprint</title>
   <defs>
@@ -479,7 +472,6 @@ Este blueprint muestra el ciclo de vida del despliegue, la validación estática
   <path d="M 504 216 L 524 216 L 524 140 L 544 140" class="edge" />
   <path d="M 504 264 L 524 264 L 524 340 L 544 340" class="edge" />
 </svg>
-```
 
 ---
 
@@ -497,7 +489,7 @@ Para optimizar costos, mitigar riesgos y acelerar el tiempo de lanzamiento, impl
 
 ### 2. Workspace de Visualización Unificado y Extensible (`viewer.html` / `hub.html`)
 Ofrece un panel de control interactivo para interactuar directamente con los 10 entregables estratégicos de ID Smile:
-* **Lector Markdown Integrado:** Implementa un parser de Markdown super-liviano escrito en Vanilla JS puro que convierte dinámicamente los archivos tácticos `.md` a HTML estructurado sin bibliotecas externas.
+* **Lector Markdown Integrado:** Implementa un parser de Markdown super-liviano escrito en Vanilla JS puro que convierte dinámicamente los archivos tácticos `.md` a HTML structured sin bibliotecas externas.
 * **Simulador de Dispositivo Dual:** Permite alternar la previsualización del sitio móvil y desktop dentro de un iframe interactivo con marcos realistas de hardware.
 * **Localhost Clean-URL Resolver & Cross-Platform Path Mapper:** Mapea automáticamente URLs limpias de producción (como `/dashboard`) a archivos locales reales (como `/dashboard-operativo-id-smile.html`) de forma transparente en ambientes de prueba o GitHub Pages, garantizando que el 100% de los links interconecten perfectamente sin 404s en ninguna plataforma.
 
