@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub de Entregables — ID Smile & diagnosticadoc.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --xray:#0C242B; --xray-2:#11333C; --petrol:#14515C; --aqua:#2E9AA0;
+  --liga:#D2506B; --ambar:#D08A32; --enamel:#FAF7F2; --enamel-2:#F0EBE3;
+  --ink:#131A1D; --ink-soft:#5A6A70; --line:#DFD8CE; --line-dark:#1D4451; --r:4px;
+  --display:'Bricolage Grotesque',ui-sans-serif,system-ui,sans-serif;
+  --body:'Public Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--enamel);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ---------- Header ---------- */
+header.top{background:var(--xray);color:#fff;padding:48px 0 36px;position:relative;overflow:hidden}
+header.top:before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 80% 0%,rgba(46,154,160,.18),transparent 60%);pointer-events:none}
+.top-content{position:relative;z-index:2}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--liga);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,48px);line-height:1.1;letter-spacing:-.025em;margin:0 0 14px}
+h1 em{font-style:normal;color:var(--aqua)}
+.desc{color:#B9D3D8;font-size:17px;max-width:64ch;margin:0}
+
+/* ---------- Grid de Entregables ---------- */
+section.hub{padding:64px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s, box-shadow .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(12,36,43,.04)}
+.card-content h2{font-family:var(--display);font-size:22px;font-weight:700;margin:0 0 10px;letter-spacing:-.015em}
+.card-content p{font-size:14.5px;color:var(--ink-soft);margin:0 0 20px}
+.meta-tag{align-self:flex-start;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:16px;font-weight:700}
+.meta-tag.mvp{background:rgba(46,154,160,.1);color:var(--petrol)}
+.meta-tag.dx{background:rgba(210,80,107,.1);color:var(--liga)}
+.meta-tag.dash{background:rgba(208,138,50,.1);color:var(--ambar)}
+.meta-tag.bmc{background:rgba(20,81,92,.1);color:var(--petrol)}
+.meta-tag.doc{background:var(--enamel-2);color:var(--ink-soft)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:12px 20px;border-radius:4px;transition:background .2s}
+.btn-primary{background:var(--petrol);color:#fff}
+.btn-primary:hover{background:var(--xray-2)}
+.btn-secondary{background:var(--enamel-2);color:var(--ink);border:1px solid var(--line)}
+.btn-secondary:hover{background:var(--line)}
+
+/* ---------- Documentos de Soporte ---------- */
+.docs-section{background:var(--enamel-2);padding:64px 0}
+.section-head{margin-bottom:36px}
+.section-head h2{font-family:var(--display);font-size:28px;font-weight:700;margin:0 0 8px;letter-spacing:-.015em}
+.section-head p{font-size:15px;color:var(--ink-soft);margin:0}
+
+/* ---------- Footer ---------- */
+footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mono);font-size:11px}
+.footer-bar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-content">
+    <p class="eyebrow">Pilar 1 · Fase de Alineación y Diagnóstico</p>
+    <h1>Hub de Entregables y MVP de <em>ID Smile</em></h1>
+    <p class="desc">Repositorio unificado de la auditoría de presencia digital, el plan operativo de 12 semanas, el Business Model Canvas y el prototipo funcional (MVP) de la landing page.</p>
+  </div>
+</header>
+
+<section class="hub">
+  <div class="wrap">
+    <div class="grid">
+      <!-- MVP Sitio Web -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag mvp">Prototipo MVP y V1 (Fase 5)</span>
+          <h2>Sitio Web (MVP / V1)</h2>
+          <p>La landing page optimizada para tráfico móvil y conversiones rápidas vía WhatsApp. Diseñada bajo una arquitectura híbrida de coexistencia de versiones. Puedes visualizar la versión MVP estática de carga ultra-veloz, o el rediseño premium V1 basado en React.</p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/" class="btn btn-primary" style="flex:1">Ver MVP (Estático)</a>
+          <a href="/v1" class="btn btn-secondary" style="flex:1">Ver V1 (Premium)</a>
+        </div>
+      </div>
+
+      <!-- Diagnóstico Clínico -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag dx">Nota de Ingreso (Fase 1-2)</span>
+          <h2>Nota de Ingreso Digital (Dx)</h2>
+          <p>Auditoría completa bajo analogía de historia clínica. Presenta de manera impecable el motivo de consulta, signos vitales, exploración detallada, diagnóstico diferencial y el tratamiento digital propuesto a 12 semanas con un cronograma Gantt interactivo.</p>
+        </div>
+        <a href="/dx" class="btn btn-primary">Ver Nota de Diagnóstico</a>
+      </div>
+
+      <!-- Dashboard Operativo -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag dash">Control de Operaciones (Fase 4)</span>
+          <h2>Dashboard Operativo</h2>
+          <p>Bitácora de trabajo de uso interno. Incluye los signos vitales, el análisis de brechas (Gap Analysis) clasificado por severidad, un DevLog paso a paso y el cronograma del tratamiento digital propuesto.</p>
+        </div>
+        <a href="/dashboard" class="btn btn-primary">Ver Dashboard Operativo</a>
+      </div>
+
+      <!-- Business Model Canvas -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag bmc">Estructura Comercial (Fase 3)</span>
+          <h2>Business Model Canvas (BMC)</h2>
+          <p>Análisis visual y estratégico que segmenta y diferencia la operación tradicional de la clínica frente a las nuevas actividades, recursos y propuestas de valor añadidas por la estrategia digital.</p>
+        </div>
+        <a href="/bmc" class="btn btn-primary">Ver Business Model Canvas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="docs-section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Documentos de Soporte Operativo</h2>
+      <p>Material de estrategia y documentación analítica para el equipo ejecutor.</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag doc">Mensajería y Abordaje</span>
+          <h2>Abordaje y Oferta Bundle (WA)</h2>
+          <p>Estructura de mensajes de WhatsApp de tres niveles y value stack completo listando componentes individuales frente al precio del paquete. Diseñado para mitigar la resistencia inicial de la clínica.</p>
+        </div>
+        <a href="/mensaje-wa-bundle.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag doc">Analítica y KPIs</span>
+          <h2>Analítica e Instrumentación</h2>
+          <p>Documento técnico que detalla qué medir, con qué herramientas, con qué frecuencia y la toma de decisiones basada en datos para el vertical dental y ortodoncia en México.</p>
+        </div>
+        <a href="/analytics-kpis-instrumentacion.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+      </div>
+
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag doc">Checklist y Bitácora</span>
+          <h2>Checklist de Evidencia</h2>
+          <p>Estatus de la investigación de escritorio. Enlista las capturas de pantalla, verificaciones manuales pendientes y los datos críticos a corroborar en la llamada de 15 minutos.</p>
+        </div>
+        <a href="/checklist-evidencia.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-bar">
+    <span>© 2026 diagnosticadoc.com — Dx digital para Dr@s</span>
+    <span>Grow Flow Automation · Pilar 1</span>
+  </div>
+</footer>
+
+</body>
+</html>
