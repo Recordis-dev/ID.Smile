@@ -101,7 +101,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: pr.number,
-                  body: '🤖 **Automated Validation Passed**: All automated setup checks and validations have passed successfully.\n\n*Note: Automatic PR approval was skipped because GitHub Actions is not permitted to approve pull requests in this repository\'s settings. To enable direct approvals, go to **Settings > Actions > General > Workflow permissions** and check **Allow GitHub Actions to create and approve pull requests**.*'
+                  body: '🤖 **Automated Validation Passed**: All automated setup checks and validations have passed successfully.\n\n*Note: Automatic PR approval was skipped because GitHub Actions does not have permission to approve PRs directly.*'
                 });
                 console.log('✅ Fallback validation comment submitted successfully.');
               }
@@ -159,6 +159,9 @@ jobs:
     needs: [auto-setup]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
