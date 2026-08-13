@@ -68,6 +68,14 @@
     {
       "src": "/hub",
       "dest": "/hub.html"
+    },
+    {
+      "src": "/viewer",
+      "dest": "/viewer.html"
+    },
+    {
+      "src": "/visualizador",
+      "dest": "/viewer.html"
     }
   ]
 }

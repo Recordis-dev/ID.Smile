@@ -22,7 +22,7 @@ body{margin:0;background:var(--enamel);color:var(--ink);font-family:var(--body);
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 
 /* ---------- Header ---------- */
-header.top{background:var(--xray);color:#fff;padding:48px 0 36px;position:relative;overflow:hidden}
+header.top{background:var(--xray);color:#fff;padding:48px 0 42px;position:relative;overflow:hidden}
 header.top:before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 80% 0%,rgba(46,154,160,.18),transparent 60%);pointer-events:none}
 .top-content{position:relative;z-index:2}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--liga);margin:0 0 12px;display:flex;align-items:center;gap:10px}
@@ -36,7 +36,7 @@ section.hub{padding:64px 0}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s, box-shadow .2s}
 .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(12,36,43,.04)}
 .card-content h2{font-family:var(--display);font-size:22px;font-weight:700;margin:0 0 10px;letter-spacing:-.015em}
-.card-content p{font-size:14.5px;color:var(--ink-soft);margin:0 0 20px}
+.card-content p{font-size:14.5px;color:var(--ink-soft);margin:0 0 20px;line-height:1.5}
 .meta-tag{align-self:flex-start;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:16px;font-weight:700}
 .meta-tag.mvp{background:rgba(46,154,160,.1);color:var(--petrol)}
 .meta-tag.dx{background:rgba(210,80,107,.1);color:var(--liga)}
@@ -44,11 +44,11 @@ section.hub{padding:64px 0}
 .meta-tag.bmc{background:rgba(20,81,92,.1);color:var(--petrol)}
 .meta-tag.doc{background:var(--enamel-2);color:var(--ink-soft)}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:12px 20px;border-radius:4px;transition:background .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:12px 20px;border-radius:4px;transition:all .2s;border:1px solid transparent;white-space:nowrap}
 .btn-primary{background:var(--petrol);color:#fff}
-.btn-primary:hover{background:var(--xray-2)}
+.btn-primary:hover{background:var(--xray-2);transform:translateY(-1px)}
 .btn-secondary{background:var(--enamel-2);color:var(--ink);border:1px solid var(--line)}
-.btn-secondary:hover{background:var(--line)}
+.btn-secondary:hover{background:var(--line);transform:translateY(-1px)}
 
 /* ---------- Documentos de Soporte ---------- */
 .docs-section{background:var(--enamel-2);padding:64px 0}
@@ -67,7 +67,10 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
   <div class="wrap top-content">
     <p class="eyebrow">Pilar 1 · Fase de Alineación y Diagnóstico</p>
     <h1>Hub de Entregables y MVP de <em>ID Smile</em></h1>
-    <p class="desc">Repositorio unificado de la auditoría de presencia digital, el plan operativo de 12 semanas, el Business Model Canvas y el prototipo funcional (MVP) de la landing page.</p>
+    <p class="desc" style="margin-bottom: 24px;">Repositorio unificado de la auditoría de presencia digital, el plan operativo de 12 semanas, el Business Model Canvas y el prototipo funcional (MVP) de la landing page.</p>
+    <a href="/viewer" class="btn btn-primary" style="background: var(--liga); font-size: 13px; padding: 14px 28px; border-radius: 99px; box-shadow: 0 4px 14px rgba(210,80,107,0.4);">
+      🚀 Lanzar Visualizador e Workspace Unificado
+    </a>
   </div>
 </header>
 
@@ -81,15 +84,13 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
           <h2>Sitio Web (MVP / V1)</h2>
           <p>La landing page optimizada para tráfico móvil y conversiones rápidas vía WhatsApp. Diseñada bajo una arquitectura híbrida de coexistencia de versiones. Puedes visualizar la versión MVP estática de carga ultra-veloz, o el rediseño premium V1 basado en React.</p>
         </div>
-        <div style="display:flex;gap:10px">
-          <a href="/" class="btn btn-primary" style="flex:1">Ver MVP (Estático)</a>
-          <a href="/v1" class="btn btn-secondary" style="flex:1">Ver V1 (Premium)</a>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px">
+            <a href="/" class="btn btn-secondary" style="flex:1">Ver MVP (Estático)</a>
+            <a href="/v1" class="btn btn-secondary" style="flex:1">Ver V1 (Premium)</a>
+          </div>
+          <a href="/viewer?doc=mvp" class="btn btn-primary">🔍 Abrir en Visualizador</a>
         </div>
-          <span class="meta-tag mvp">Prototipo MVP (Fase 5)</span>
-          <h2>Sitio Web Prototipo (MVP)</h2>
-          <p>La landing page optimizada para tráfico móvil y conversiones rápidas vía WhatsApp. Diseñada con cero dependencias externas para una velocidad instantánea, adaptada a las regulaciones de COFEPRIS (sin testimonios inventados) y con un diseño impecable.</p>
-        </div>
-        <a href="/" class="btn btn-primary">Ver MVP de Landing Page</a>
       </div>
 
       <!-- Diagnóstico Clínico -->
@@ -99,7 +100,10 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
           <h2>Nota de Ingreso Digital (Dx)</h2>
           <p>Auditoría completa bajo analogía de historia clínica. Presenta de manera impecable el motivo de consulta, signos vitales, exploración detallada, diagnóstico diferencial y el tratamiento digital propuesto a 12 semanas con un cronograma Gantt interactivo.</p>
         </div>
-        <a href="/dx" class="btn btn-primary">Ver Nota de Diagnóstico</a>
+        <div style="display:flex;gap:10px">
+          <a href="/dx" class="btn btn-secondary" style="flex:1">Ver Ruta</a>
+          <a href="/viewer?doc=dx" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
 
       <!-- Dashboard Operativo -->
@@ -109,7 +113,10 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
           <h2>Dashboard Operativo</h2>
           <p>Bitácora de trabajo de uso interno. Incluye los signos vitales, el análisis de brechas (Gap Analysis) clasificado por severidad, un DevLog paso a paso y el cronograma del tratamiento digital propuesto.</p>
         </div>
-        <a href="/dashboard" class="btn btn-primary">Ver Dashboard Operativo</a>
+        <div style="display:flex;gap:10px">
+          <a href="/dashboard" class="btn btn-secondary" style="flex:1">Ver Ruta</a>
+          <a href="/viewer?doc=dashboard" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
 
       <!-- Business Model Canvas -->
@@ -119,7 +126,10 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
           <h2>Business Model Canvas (BMC)</h2>
           <p>Análisis visual y estratégico que segmenta y diferencia la operación tradicional de la clínica frente a las nuevas actividades, recursos y propuestas de valor añadidas por la estrategia digital.</p>
         </div>
-        <a href="/bmc" class="btn btn-primary">Ver Business Model Canvas</a>
+        <div style="display:flex;gap:10px">
+          <a href="/bmc" class="btn btn-secondary" style="flex:1">Ver Ruta</a>
+          <a href="/viewer?doc=bmc" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
     </div>
   </div>
@@ -132,31 +142,69 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
       <p>Material de estrategia y documentación analítica para el equipo ejecutor.</p>
     </div>
     <div class="grid">
+      <!-- Mensajería -->
       <div class="card">
         <div class="card-content">
           <span class="meta-tag doc">Mensajería y Abordaje</span>
           <h2>Abordaje y Oferta Bundle (WA)</h2>
           <p>Estructura de mensajes de WhatsApp de tres niveles y value stack completo listando componentes individuales frente al precio del paquete. Diseñado para mitigar la resistencia inicial de la clínica.</p>
         </div>
-        <a href="/mensaje-wa-bundle.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+        <div style="display:flex;gap:10px">
+          <a href="/mensaje-wa-bundle.md" class="btn btn-secondary" target="_blank" style="flex:1">Archivo Raw</a>
+          <a href="/viewer?doc=wa" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
 
+      <!-- Analítica -->
       <div class="card">
         <div class="card-content">
           <span class="meta-tag doc">Analítica y KPIs</span>
           <h2>Analítica e Instrumentación</h2>
           <p>Documento técnico que detalla qué medir, con qué herramientas, con qué frecuencia y la toma de decisiones basada en datos para el vertical dental y ortodoncia en México.</p>
         </div>
-        <a href="/analytics-kpis-instrumentacion.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+        <div style="display:flex;gap:10px">
+          <a href="/analytics-kpis-instrumentacion.md" class="btn btn-secondary" target="_blank" style="flex:1">Archivo Raw</a>
+          <a href="/viewer?doc=analytics" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
 
+      <!-- Checklist -->
       <div class="card">
         <div class="card-content">
           <span class="meta-tag doc">Checklist y Bitácora</span>
           <h2>Checklist de Evidencia</h2>
           <p>Estatus de la investigación de escritorio. Enlista las capturas de pantalla, verificaciones manuales pendientes y los datos críticos a corroborar en la llamada de 15 minutos.</p>
         </div>
-        <a href="/checklist-evidencia.md" class="btn btn-secondary" target="_blank">Leer Documento (.md)</a>
+        <div style="display:flex;gap:10px">
+          <a href="/checklist-evidencia.md" class="btn btn-secondary" target="_blank" style="flex:1">Archivo Raw</a>
+          <a href="/viewer?doc=evidence" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
+      </div>
+
+      <!-- Metaprompt -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag doc">Metaprompt Standalone</span>
+          <h2>Metaprompt del Sitio Web</h2>
+          <p>Especificación de ingeniería de prompts autosuficiente que describe al detalle el diseño, copy, tono, tokens y las restricciones de COFEPRIS bajo las cuales se construyó el MVP.</p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/metaprompt-sitio-id-smile.md" class="btn btn-secondary" target="_blank" style="flex:1">Archivo Raw</a>
+          <a href="/viewer?doc=metaprompt" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
+      </div>
+
+      <!-- Guía de Despliegue -->
+      <div class="card">
+        <div class="card-content">
+          <span class="meta-tag doc">Guía CI/CD</span>
+          <h2>Guía de Despliegue Automatizado</h2>
+          <p>Manual técnico que explica la arquitectura CI/CD con GitHub Actions, despliegue continuo en Vercel y Pages, y el funcionamiento no-interactivo del Vercel Plugin de IA.</p>
+        </div>
+        <div style="display:flex;gap:10px">
+          <a href="/DEPLOYMENT.md" class="btn btn-secondary" target="_blank" style="flex:1">Archivo Raw</a>
+          <a href="/viewer?doc=deployment" class="btn btn-primary" style="flex:1">🔍 Visualizar</a>
+        </div>
       </div>
     </div>
   </div>

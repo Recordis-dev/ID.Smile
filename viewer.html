@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visualizador Interactivo de Entregables — ID Smile Workspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --xray: #0C242B;
+  --xray-2: #11333C;
+  --petrol: #14515C;
+  --petrol-d: #0F3E47;
+  --aqua: #2E9AA0;
+  --liga: #D2506B;
+  --ambar: #D08A32;
+  --enamel: #FAF7F2;
+  --enamel-2: #F0EBE3;
+  --ink: #131A1D;
+  --ink-soft: #5A6A70;
+  --line: #DFD8CE;
+  --line-dark: #1D4451;
+  --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --body: 'Public Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--enamel);
+  color: var(--ink);
+  font-family: var(--body);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Sidebar ---------- */
+aside.sidebar {
+  width: 300px;
+  background: var(--xray);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line-dark);
+  flex-shrink: 0;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.sidebar-brand .mark {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--petrol);
+  position: relative;
+}
+
+.sidebar-brand .mark:before, .sidebar-brand .mark:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--aqua);
+}
+
+.sidebar-brand .mark:before { inset: 5px; }
+.sidebar-brand .mark:after { inset: 9px; border-color: #fff; }
+
+.sidebar-brand b {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-subtitle {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: #8FB6BD;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 14px;
+}
+
+.menu-group {
+  margin-bottom: 24px;
+}
+
+.menu-group-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #5A7E85;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  color: #B9D3D8;
+  text-decoration: none;
+  font-size: 13.5px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  transition: all 0.2s;
+  font-family: var(--body);
+}
+
+.menu-item:hover {
+  background: rgba(46, 154, 160, 0.12);
+  color: #fff;
+}
+
+.menu-item.active {
+  background: var(--petrol);
+  color: #fff;
+  font-weight: 500;
+}
+
+.menu-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--line-dark);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #5A7E85;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar-footer a {
+  color: #8FB6BD;
+  text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+  color: #fff;
+}
+
+/* ---------- Main Viewer Workspace ---------- */
+main.workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  background: var(--enamel);
+}
+
+/* Top Toolbar */
+.toolbar {
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.toolbar-title-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.menu-toggle svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.toolbar-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+
+.toolbar-badge {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 99px;
+  letter-spacing: 0.05em;
+}
+
+.toolbar-badge.html {
+  background: rgba(46, 154, 160, 0.1);
+  color: var(--petrol);
+}
+
+.toolbar-badge.md {
+  background: var(--enamel-2);
+  color: var(--ink-soft);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Viewport Simulator Control */
+.viewport-control {
+  display: flex;
+  background: var(--enamel-2);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.viewport-btn {
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.viewport-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.viewport-btn.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(12, 36, 43, 0.08);
+}
+
+.btn-open-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--petrol);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: all 0.2s;
+}
+
+.btn-open-tab:hover {
+  background: var(--enamel-2);
+  color: var(--aqua);
+  border-color: var(--aqua);
+}
+
+.btn-open-tab svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.5;
+}
+
+/* Content Frame Area */
+.content-area {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Loading overlay */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 247, 242, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.loading-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--line);
+  border-top-color: var(--aqua);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Iframe Frame Styles */
+.iframe-container {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.iframe-container.active {
+  display: flex;
+}
+
+iframe.preview-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(12, 36, 43, 0.04);
+  border: 1px solid var(--line);
+  transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-radius 0.3s, border-width 0.3s, box-shadow 0.3s;
+}
+
+/* CSS Mobile Device Frame */
+iframe.preview-frame.mobile-mode {
+  width: 375px;
+  height: 760px;
+  border: 12px solid #131A1D;
+  border-radius: 36px;
+  box-shadow: 0 24px 60px rgba(12, 36, 43, 0.22);
+}
+
+/* Markdown Document Styles */
+.markdown-container {
+  width: 100%;
+  height: 100%;
+  display: none;
+  overflow-y: auto;
+  padding: 40px 24px 80px;
+}
+
+.markdown-container.active {
+  display: block;
+}
+
+.markdown-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 48px;
+  box-shadow: 0 4px 12px rgba(12, 36, 43, 0.02);
+}
+
+/* Markdown prose rendering */
+.markdown-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.markdown-content h1 {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--xray);
+}
+
+.markdown-content h2 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 36px;
+  margin-bottom: 16px;
+  color: var(--petrol);
+}
+
+.markdown-content h3 {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.markdown-content p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.markdown-content li {
+  margin-bottom: 6px;
+}
+
+.markdown-content code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--enamel-2);
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: var(--liga);
+}
+
+.markdown-content pre {
+  background: var(--xray);
+  color: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-content pre code {
+  background: transparent;
+  padding: 0;
+  color: #B9D3D8;
+  font-size: 12.5px;
+}
+
+.markdown-content blockquote {
+  margin: 20px 0;
+  padding: 10px 20px;
+  border-left: 4px solid var(--aqua);
+  background: var(--enamel-2);
+  color: var(--ink-soft);
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+.markdown-content hr {
+  height: 1px;
+  border: none;
+  background: var(--line);
+  margin: 32px 0;
+}
+
+.markdown-content a {
+  color: var(--petrol);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+.markdown-content a:hover {
+  color: var(--aqua);
+}
+
+/* Beautiful Custom Tables */
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 13.5px;
+}
+
+.markdown-content th {
+  background: var(--enamel-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  text-align: left;
+  color: var(--petrol);
+}
+
+.markdown-content td {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.markdown-content tr:nth-child(even) {
+  background: rgba(250, 247, 242, 0.4);
+}
+
+/* ---------- Responsive Layout Breakpoints ---------- */
+@media (max-width: 991px) {
+  aside.sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+
+  aside.sidebar.open {
+    transform: translateX(0);
+    box-shadow: 12px 0 30px rgba(12, 36, 43, 0.15);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="/hub" class="sidebar-brand">
+      <span class="mark"></span>
+      <b>ID Smile</b>
+    </a>
+    <div class="sidebar-subtitle">Workspace Unificado</div>
+  </div>
+
+  <nav class="sidebar-menu">
+    <div class="menu-group">
+      <div class="menu-group-title">PROTOTIPOS & RUTAS</div>
+
+      <a href="?doc=mvp" class="menu-item" id="nav-mvp">
+        <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        Landing Page (MVP)
+      </a>
+
+      <a href="?doc=v1" class="menu-item" id="nav-v1">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17V7l7 5z"/></svg>
+        Rediseño Premium (V1)
+      </a>
+
+      <a href="?doc=dx" class="menu-item" id="nav-dx">
+        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Nota de Diagnóstico (Dx)
+      </a>
+
+      <a href="?doc=dashboard" class="menu-item" id="nav-dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17h6M9 12h6M9 7h6"/></svg>
+        Dashboard Operativo
+      </a>
+
+      <a href="?doc=bmc" class="menu-item" id="nav-bmc">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Business Model Canvas
+      </a>
+    </div>
+
+    <div class="menu-group">
+      <div class="menu-group-title">DOCUMENTACIÓN & ESTRATEGIA</div>
+
+      <a href="?doc=wa" class="menu-item" id="nav-wa">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Abordaje y Oferta Bundle
+      </a>
+
+      <a href="?doc=analytics" class="menu-item" id="nav-analytics">
+        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        Analítica e Instrumentación
+      </a>
+
+      <a href="?doc=evidence" class="menu-item" id="nav-evidence">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Checklist de Evidencia
+      </a>
+
+      <a href="?doc=metaprompt" class="menu-item" id="nav-metaprompt">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        Metaprompt del Sitio
+      </a>
+
+      <a href="?doc=deployment" class="menu-item" id="nav-deployment">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Guía de Despliegue CI/CD
+      </a>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <span>diagnosticadoc.com</span>
+    <a href="/hub">← Volver al Hub</a>
+  </div>
+</aside>
+
+<!-- Main Viewer Content -->
+<main class="workspace">
+  <!-- Toolbar -->
+  <header class="toolbar">
+    <div class="toolbar-title-container">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </button>
+      <h1 class="toolbar-title" id="toolbarTitle">Cargando...</h1>
+      <span class="toolbar-badge html" id="docTypeBadge">Prototipo</span>
+    </div>
+
+    <div class="toolbar-actions">
+      <!-- Responsive Viewport Simulator Selector (Only visible for HTML templates) -->
+      <div class="viewport-control" id="viewportControl" style="display: none;">
+        <button class="viewport-btn active" id="btnDesktop">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Escritorio
+        </button>
+        <button class="viewport-btn" id="btnMobile">
+          <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+          Móvil
+        </button>
+      </div>
+
+      <!-- Open Raw in New Tab -->
+      <a href="#" target="_blank" class="btn-open-tab" id="btnOpenTab">
+        Abrir Ruta ↗
+      </a>
+    </div>
+  </header>
+
+  <!-- Interactive Space -->
+  <div class="content-area">
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- HTML Route Preview -->
+    <div class="iframe-container" id="iframeContainer">
+      <iframe src="about:blank" class="preview-frame" id="previewIframe"></iframe>
+    </div>
+
+    <!-- Markdown Document Presentation -->
+    <div class="markdown-container" id="markdownContainer">
+      <div class="markdown-inner">
+        <div class="markdown-content" id="markdownContent"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ---------- Workspace Documents Dictionary ----------
+const DOCUMENTS = {
+  mvp: {
+    title: "Landing Page (MVP)",
+    type: "html",
+    url: "/",
+    badge: "PROTOTIPO ESTÁTICO"
+  },
+  v1: {
+    title: "Rediseño Premium (V1)",
+    type: "html",
+    url: "/v1",
+    badge: "PROTOTIPO REACT"
+  },
+  dx: {
+    title: "Nota de Diagnóstico Clínico (Dx)",
+    type: "html",
+    url: "/dx",
+    badge: "ENTREGABLE FASE 1-2"
+  },
+  dashboard: {
+    title: "Dashboard Operativo",
+    type: "html",
+    url: "/dashboard",
+    badge: "DIAGNOSTICO COFEPRIS/KPIs"
+  },
+  bmc: {
+    title: "Business Model Canvas (BMC)",
+    type: "html",
+    url: "/bmc",
+    badge: "ESTRATEGIA FASE 3"
+  },
+  wa: {
+    title: "Abordaje y Oferta Bundle (WA)",
+    type: "md",
+    url: "/mensaje-wa-bundle.md",
+    badge: "DOCUMENTO ESTRATÉGICO"
+  },
+  analytics: {
+    title: "Analítica e Instrumentación",
+    type: "md",
+    url: "/analytics-kpis-instrumentacion.md",
+    badge: "GUÍA TÉCNICA KPIs"
+  },
+  evidence: {
+    title: "Checklist de Evidencia (Fase 0)",
+    type: "md",
+    url: "/checklist-evidencia.md",
+    badge: "HOJA DE TRABAJO"
+  },
+  metaprompt: {
+    title: "Metaprompt del Sitio Web",
+    type: "md",
+    url: "/metaprompt-sitio-id-smile.md",
+    badge: "ESPECIFICACIÓN COMPLETADA"
+  },
+  deployment: {
+    title: "Guía de Despliegue CI/CD",
+    type: "md",
+    url: "/DEPLOYMENT.md",
+    badge: "DOCUMENTO DE ENTORNO"
+  }
+};
+
+// ---------- HTML DOM Elements ----------
+const sidebar = document.getElementById("sidebar");
+const menuToggle = document.getElementById("menuToggle");
+const toolbarTitle = document.getElementById("toolbarTitle");
+const docTypeBadge = document.getElementById("docTypeBadge");
+const viewportControl = document.getElementById("viewportControl");
+const btnDesktop = document.getElementById("btnDesktop");
+const btnMobile = document.getElementById("btnMobile");
+const btnOpenTab = document.getElementById("btnOpenTab");
+const loadingOverlay = document.getElementById("loadingOverlay");
+const iframeContainer = document.getElementById("iframeContainer");
+const previewIframe = document.getElementById("previewIframe");
+const markdownContainer = document.getElementById("markdownContainer");
+const markdownContent = document.getElementById("markdownContent");
+
+// Toggle Sidebar on mobile
+if (menuToggle) {
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+  });
+}
+
+// Close sidebar on item click on mobile
+document.querySelectorAll(".menu-item").forEach(item => {
+  item.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+  });
+});
+
+// ---------- Viewport Toggle Simulator ----------
+btnDesktop.addEventListener("click", () => {
+  btnDesktop.classList.add("active");
+  btnMobile.classList.remove("active");
+  previewIframe.classList.remove("mobile-mode");
+});
+
+// ---------- Helper for resolving clean URLs to physical filenames locally ----------
+function resolveLocalUrl(url) {
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (!isLocal) return url;
+
+  const localMappings = {
+    "/": "/index.html",
+    "/v1": "/v1.html",
+    "/dx": "/dx-digital-smile-ortodoncia.html",
+    "/dashboard": "/dashboard-operativo-id-smile.html",
+    "/bmc": "/business-model-canvas-id-smile.html"
+  };
+  return localMappings[url] || url;
+}
+
+btnMobile.addEventListener("click", () => {
+  btnMobile.classList.add("active");
+  btnDesktop.classList.remove("active");
+  previewIframe.classList.add("mobile-mode");
+});
+
+// ---------- Markdown Parser ----------
+function parseMarkdown(md) {
+  // Prevent script/HTML injection, except blockquotes, hr, etc
+  let html = md
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // Restore blockquote > sign which we just escaped as &gt;
+  html = html.replace(/^(&gt;)\s*(.*)$/gm, '<blockquote>$2</blockquote>');
+
+  // Combine consecutive blockquotes
+  html = html.replace(/<\/blockquote>\n<blockquote>/g, '\n');
+
+  // Code blocks (```lang ... ```)
+  html = html.replace(/```(\w*)\n([\s\S]*?)\n```/g, function(match, lang, code) {
+    return `<pre><code class="language-${lang}">${code}</code></pre>`;
+  });
+
+  // Inline code `code`
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  // Custom Tables
+  let lines = html.split('\n');
+  let inTable = false;
+  let tableHeader = [];
+  let tableRows = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+    if (line.startsWith('|') && line.endsWith('|')) {
+      if (!inTable) {
+        inTable = true;
+        tableHeader = line.split('|').map(s => s.trim()).filter((s, idx, arr) => idx > 0 && idx < arr.length - 1);
+        if (lines[i+1] && (lines[i+1].trim().includes('---|') || lines[i+1].trim().includes('-|'))) {
+          i++;
+        }
+      } else {
+        let cells = line.split('|').map(s => s.trim()).filter((s, idx, arr) => idx > 0 && idx < arr.length - 1);
+        tableRows.push(cells);
+      }
+      lines[i] = '<!--TABLE_PLACEHOLDER-->';
+    } else {
+      if (inTable) {
+        let tableHtml = '<table><thead><tr>';
+        tableHeader.forEach(h => { tableHtml += `<th>${h}</th>`; });
+        tableHtml += '</tr></thead><tbody>';
+        tableRows.forEach(row => {
+          tableHtml += '<tr>';
+          row.forEach(cell => { tableHtml += `<td>${cell}</td>`; });
+          tableHtml += '</tr>';
+        });
+        tableHtml += '</tbody></table>';
+
+        let idx = lines.indexOf('<!--TABLE_PLACEHOLDER-->');
+        if (idx !== -1) {
+          lines[idx] = tableHtml;
+        }
+        tableHeader = [];
+        tableRows = [];
+        inTable = false;
+      }
+    }
+  }
+  lines = lines.filter(l => l !== '<!--TABLE_PLACEHOLDER-->');
+  html = lines.join('\n');
+
+  // Headings
+  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+  // Horizontal rules
+  html = html.replace(/^---$/gim, '<hr>');
+
+  // Unordered lists
+  html = html.replace(/^\s*[\-\*]\s+(.*)$/gim, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+  html = html.replace(/<\/ul>\s*<ul>/gim, '');
+
+  // Bold and Italic
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+  // Paragraph wrapping
+  let blocks = html.split(/\n\s*\n/);
+  html = blocks.map(block => {
+    let trimmed = block.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr')) {
+      return trimmed;
+    }
+    return `<p>${trimmed}</p>`;
+  }).join('\n');
+
+  return html;
+}
+
+// ---------- Document Router & Loader ----------
+function loadDocument() {
+  const urlParams = new URLSearchParams(window.location.search);
+  let docId = urlParams.get('doc') || 'mvp';
+
+  // Fallback to mvp if document doesn't exist
+  if (!DOCUMENTS[docId]) {
+    docId = 'mvp';
+  }
+
+  const doc = DOCUMENTS[docId];
+
+  // Update navigation highlighting
+  document.querySelectorAll(".menu-item").forEach(item => {
+    item.classList.remove("active");
+  });
+  const activeNav = document.getElementById("nav-" + docId);
+  if (activeNav) {
+    activeNav.classList.add("active");
+  }
+
+  // Resolve raw vs clean URL
+  const resolvedUrl = resolveLocalUrl(doc.url);
+
+  // Update Toolbar
+  toolbarTitle.textContent = doc.title;
+  docTypeBadge.textContent = doc.badge;
+  btnOpenTab.href = resolvedUrl;
+  btnOpenTab.textContent = doc.type === 'html' ? 'Abrir Ruta ↗' : 'Archivo Raw ↗';
+
+  // Toggle Loading State
+  loadingOverlay.classList.add("active");
+
+  if (doc.type === "html") {
+    // Show simulation controls
+    viewportControl.style.display = "flex";
+
+    // Show iframe container, hide markdown container
+    iframeContainer.classList.add("active");
+    markdownContainer.classList.remove("active");
+
+    // Load URL into iframe
+    previewIframe.src = resolvedUrl;
+
+    // Disable loading on frame load
+    previewIframe.onload = function() {
+      loadingOverlay.classList.remove("active");
+    };
+  } else {
+    // Hide simulation controls
+    viewportControl.style.display = "none";
+
+    // Show markdown container, hide iframe container
+    markdownContainer.classList.add("active");
+    iframeContainer.classList.remove("active");
+    previewIframe.src = "about:blank";
+
+    // Fetch and Parse markdown file
+    fetch(resolvedUrl)
+      .then(response => {
+        if (!response.ok) throw new Error("Network response was not OK");
+        return response.text();
+      })
+      .then(text => {
+        markdownContent.innerHTML = parseMarkdown(text);
+        loadingOverlay.classList.remove("active");
+      })
+      .catch(err => {
+        markdownContent.innerHTML = `<h3>Error al cargar el documento</h3><p>No se pudo cargar la ruta <code>${resolvedUrl}</code>. Detalle: ${err.message}</p>`;
+        loadingOverlay.classList.remove("active");
+      });
+  }
+}
+
+// Listen to URL changes (for sidebar links click)
+window.addEventListener("popstate", loadDocument);
+
+// Initial Load
+window.addEventListener("DOMContentLoaded", loadDocument);
+
+// Override sidebar anchor clicks for SPA transition
+document.querySelectorAll(".menu-item").forEach(item => {
+  item.addEventListener("click", function(e) {
+    e.preventDefault();
+    const href = this.getAttribute("href");
+    history.pushState(null, "", href);
+    loadDocument();
+  });
+});
+</script>
+</body>
+</html>
