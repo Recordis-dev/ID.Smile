@@ -4,10 +4,6 @@
   "trailingSlash": false,
   "routes": [
     {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
       "src": "/(index|index.html)",
       "dest": "/index.html"
     },
