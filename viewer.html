@@ -828,19 +828,51 @@ btnDesktop.addEventListener("click", () => {
   previewIframe.classList.remove("mobile-mode");
 });
 
-// ---------- Helper for resolving clean URLs to physical filenames locally ----------
-function resolveLocalUrl(url) {
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  if (!isLocal) return url;
+// ---------- Helper for resolving clean URLs to physical filenames locally and on GitHub Pages ----------
+function getBasePath() {
+  const path = window.location.pathname;
+  const knownPaths = [
+    '/viewer.html', '/viewer', '/hub.html', '/hub',
+    '/index.html', '/v1.html', '/v1',
+    '/dx-digital-smile-ortodoncia.html', '/dx',
+    '/dashboard-operativo-id-smile.html', '/dashboard',
+    '/business-model-canvas-id-smile.html', '/bmc'
+  ];
+  for (const kp of knownPaths) {
+    if (path.endsWith(kp)) {
+      return path.substring(0, path.length - kp.length);
+    }
+  }
+  if (path.endsWith('/')) {
+    return path.substring(0, path.length - 1);
+  }
+  return '';
+}
 
-  const localMappings = {
-    "/": "/index.html",
-    "/v1": "/v1.html",
-    "/dx": "/dx-digital-smile-ortodoncia.html",
-    "/dashboard": "/dashboard-operativo-id-smile.html",
-    "/bmc": "/business-model-canvas-id-smile.html"
-  };
-  return localMappings[url] || url;
+function resolveLocalUrl(url) {
+  const isLocalOrGitHub = window.location.hostname === 'localhost' ||
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.endsWith('github.io');
+
+  let resolved = url;
+  if (isLocalOrGitHub) {
+    const localMappings = {
+      "/": "/index.html",
+      "/v1": "/v1.html",
+      "/dx": "/dx-digital-smile-ortodoncia.html",
+      "/dashboard": "/dashboard-operativo-id-smile.html",
+      "/bmc": "/business-model-canvas-id-smile.html",
+      "/viewer": "/viewer.html",
+      "/hub": "/hub.html"
+    };
+    resolved = localMappings[url] || url;
+  }
+
+  const basePath = getBasePath();
+  if (basePath && resolved.startsWith('/')) {
+    return basePath + resolved;
+  }
+  return resolved;
 }
 
 btnMobile.addEventListener("click", () => {
@@ -1053,6 +1085,12 @@ document.querySelectorAll(".menu-item").forEach(item => {
     history.pushState(null, "", href);
     loadDocument();
   });
+});
+
+// Rewrite all local links (e.g. Back to Hub) to resolve correctly on local/github pages
+document.querySelectorAll('a[href^="/"]').forEach(a => {
+  const href = a.getAttribute('href');
+  a.setAttribute('href', resolveLocalUrl(href));
 });
 </script>
 </body>

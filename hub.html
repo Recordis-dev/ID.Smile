@@ -231,5 +231,66 @@ footer{background:var(--xray);color:#7FA7AE;padding:32px 0;font-family:var(--mon
 </footer>
 
 <script src="navigator.js" defer></script>
+<script>
+(function() {
+  function getBasePath() {
+    const path = window.location.pathname;
+    const knownPaths = [
+      '/viewer.html', '/viewer', '/hub.html', '/hub',
+      '/index.html', '/v1.html', '/v1',
+      '/dx-digital-smile-ortodoncia.html', '/dx',
+      '/dashboard-operativo-id-smile.html', '/dashboard',
+      '/business-model-canvas-id-smile.html', '/bmc'
+    ];
+    for (const kp of knownPaths) {
+      if (path.endsWith(kp)) {
+        return path.substring(0, path.length - kp.length);
+      }
+    }
+    if (path.endsWith('/')) {
+      return path.substring(0, path.length - 1);
+    }
+    return '';
+  }
+
+  function resolveUrl(url) {
+    const isLocalOrGitHub = window.location.hostname === 'localhost' ||
+                             window.location.hostname === '127.0.0.1' ||
+                             window.location.hostname.endsWith('github.io');
+    let resolved = url;
+    if (isLocalOrGitHub) {
+      const localMappings = {
+        "/": "/index.html",
+        "/v1": "/v1.html",
+        "/dx": "/dx-digital-smile-ortodoncia.html",
+        "/dashboard": "/dashboard-operativo-id-smile.html",
+        "/bmc": "/business-model-canvas-id-smile.html",
+        "/viewer": "/viewer.html",
+        "/hub": "/hub.html"
+      };
+
+      // Keep search parameters like ?doc=...
+      const parts = url.split('?');
+      const basePathOnly = parts[0];
+      const searchParams = parts[1] ? '?' + parts[1] : '';
+
+      if (localMappings[basePathOnly]) {
+        resolved = localMappings[basePathOnly] + searchParams;
+      }
+    }
+    const basePath = getBasePath();
+    if (basePath && resolved.startsWith('/')) {
+      return basePath + resolved;
+    }
+    return resolved;
+  }
+
+  // Rewrite all local links to match environmental paths
+  document.querySelectorAll('a[href^="/"]').forEach(a => {
+    const href = a.getAttribute('href');
+    a.setAttribute('href', resolveUrl(href));
+  });
+})();
+</script>
 </body>
 </html>
