@@ -8,6 +8,10 @@
       "dest": "/index.html"
     },
     {
+      "src": "/v1",
+      "dest": "/v1.html"
+    },
+    {
       "src": "/dx",
       "dest": "/dx-digital-smile-ortodoncia.html"
     },

@@ -80,4 +80,20 @@ Formal, cálido, sin anglicismos ni jerga de marketing. Se dirige al paciente qu
 
 ---
 
+## 9. Árbol y Evolución de Versiones (MVP vs. V1)
+
+Para mantener la flexibilidad de experimentación, el sistema de ID Smile preserva y evoluciona su árbol de versiones mediante una arquitectura híbrida de coexistencia.
+
+### Estructura de Archivos y Versiones
+- **Versión MVP (Estática / Veloz):** Ubicada en `/` (`index.html`). Implementación pura en HTML5, CSS3 nativo y Vanilla JS, con cero dependencias externas. Garantiza velocidad extrema para conexiones móviles inestables y cumple al 100% con COFEPRIS.
+- **Versión V1 (Premium / React):** Ubicada en `/v1` (`v1.html`). Un rediseño premium y sofisticado basado en la especificación `<x-dc>` y React. Ofrece una experiencia interactiva fluida con animaciones avanzadas de revelado al deslizar y una disposición visual impecable.
+
+### Mecanismo de Conmutación (Toggle Switcher)
+Ambas versiones incorporan un widget de conmutación de versión (**Toggle Version Switcher**) flotante en la esquina inferior izquierda.
+- **Persistencia de preferencia:** Utiliza `localStorage` (`preferred-version`) para guardar la preferencia del usuario.
+- **Redirección automática transparente:** Si un usuario prefiere la versión V1 (`preferred-version: 'v1'`), cualquier acceso posterior a la raíz `/` le redirigirá instantáneamente a `/v1` mediante un script de alto rendimiento incrustado en el `<head>` del MVP.
+- **Diseño unificado:** El widget de control flotante está diseñado para seguir el tono y tokens de marca de ID Smile (utilizando `--xray`, `--aqua`, `--line-dark` y tipografía `JetBrains Mono`), posicionándose con seguridad por encima de la barra de navegación móvil.
+
+---
+
 *Este metaprompt describe exactamente `sitio-id-smile/index.html`, el MVP ya construido como parte de la Fase 6. Para adaptar este patrón a un nuevo cliente médico, usar el metaprompt maestro genérico en `references/landing-pages-engineering.md` del skill diagnosticadoc — este documento es su instancia aplicada, no el patrón general.*
