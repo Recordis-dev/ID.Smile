@@ -828,19 +828,51 @@ btnDesktop.addEventListener("click", () => {
   previewIframe.classList.remove("mobile-mode");
 });
 
-// ---------- Helper for resolving clean URLs to physical filenames locally ----------
-function resolveLocalUrl(url) {
-  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  if (!isLocal) return url;
+// ---------- Helper for resolving clean URLs to physical filenames locally and on GitHub Pages ----------
+function getBasePath() {
+  const path = window.location.pathname;
+  const knownPaths = [
+    '/viewer.html', '/viewer', '/hub.html', '/hub',
+    '/index.html', '/v1.html', '/v1',
+    '/dx-digital-smile-ortodoncia.html', '/dx',
+    '/dashboard-operativo-id-smile.html', '/dashboard',
+    '/business-model-canvas-id-smile.html', '/bmc'
+  ];
+  for (const kp of knownPaths) {
+    if (path.endsWith(kp)) {
+      return path.substring(0, path.length - kp.length);
+    }
+  }
+  if (path.endsWith('/')) {
+    return path.substring(0, path.length - 1);
+  }
+  return '';
+}
 
-  const localMappings = {
-    "/": "/index.html",
-    "/v1": "/v1.html",
-    "/dx": "/dx-digital-smile-ortodoncia.html",
-    "/dashboard": "/dashboard-operativo-id-smile.html",
-    "/bmc": "/business-model-canvas-id-smile.html"
-  };
-  return localMappings[url] || url;
+function resolveLocalUrl(url) {
+  const isLocalOrGitHub = window.location.hostname === 'localhost' ||
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.endsWith('github.io');
+
+  let resolved = url;
+  if (isLocalOrGitHub) {
+    const localMappings = {
+      "/": "/index.html",
+      "/v1": "/v1.html",
+      "/dx": "/dx-digital-smile-ortodoncia.html",
+      "/dashboard": "/dashboard-operativo-id-smile.html",
+      "/bmc": "/business-model-canvas-id-smile.html",
+      "/viewer": "/viewer.html",
+      "/hub": "/hub.html"
+    };
+    resolved = localMappings[url] || url;
+  }
+
+  const basePath = getBasePath();
+  if (basePath && resolved.startsWith('/')) {
+    return basePath + resolved;
+  }
+  return resolved;
 }
 
 btnMobile.addEventListener("click", () => {
@@ -851,8 +883,15 @@ btnMobile.addEventListener("click", () => {
 
 // ---------- Markdown Parser ----------
 function parseMarkdown(md) {
-  // Prevent script/HTML injection, except blockquotes, hr, etc
-  let html = md
+  const svgBlocks = [];
+  // 1. Pre-extract all raw <svg>...</svg> blocks to placeholders to protect them from HTML escaping
+  let parsedMd = md.replace(/<svg[\s\S]*?<\/svg>/gi, function(match) {
+    svgBlocks.push(match);
+    return `<!--SVG_BLOCK_PLACEHOLDER_${svgBlocks.length - 1}-->`;
+  });
+
+  // 2. Prevent script/HTML injection, except blockquotes, hr, etc
+  let html = parsedMd
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
@@ -956,11 +995,18 @@ function parseMarkdown(md) {
   html = blocks.map(block => {
     let trimmed = block.trim();
     if (!trimmed) return '';
-    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr') || trimmed.startsWith('<div')) {
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<ul') || trimmed.startsWith('<table') || trimmed.startsWith('<pre') || trimmed.startsWith('<block') || trimmed.startsWith('<hr') || trimmed.startsWith('<div') || trimmed.startsWith('<!--SVG_BLOCK_PLACEHOLDER_') || trimmed.startsWith('&lt;!--SVG_BLOCK_PLACEHOLDER_')) {
       return trimmed;
     }
     return `<p>${trimmed}</p>`;
   }).join('\n');
+
+  // 3. Re-inject raw SVG blocks into their corresponding placeholders
+  for (let j = 0; j < svgBlocks.length; j++) {
+    const rawSvg = svgBlocks[j];
+    html = html.replace(`&lt;!--SVG_BLOCK_PLACEHOLDER_${j}--&gt;`, `<div style="margin: 24px 0; max-width: 100%; display: flex; justify-content: center; width: 100%;">${rawSvg}</div>`);
+    html = html.replace(`<!--SVG_BLOCK_PLACEHOLDER_${j}-->`, `<div style="margin: 24px 0; max-width: 100%; display: flex; justify-content: center; width: 100%;">${rawSvg}</div>`);
+  }
 
   return html;
 }
@@ -1053,6 +1099,12 @@ document.querySelectorAll(".menu-item").forEach(item => {
     history.pushState(null, "", href);
     loadDocument();
   });
+});
+
+// Rewrite all local links (e.g. Back to Hub) to resolve correctly on local/github pages
+document.querySelectorAll('a[href^="/"]').forEach(a => {
+  const href = a.getAttribute('href');
+  a.setAttribute('href', resolveLocalUrl(href));
 });
 </script>
 <script src="navigator.js" defer></script>

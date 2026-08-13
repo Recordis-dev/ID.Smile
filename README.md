@@ -5,9 +5,8 @@ Ecosistema digital unificado para ID Smile, diseñado e implementado con una arq
 ---
 
 ## 🗺️ System Blueprint: Fullstack Architecture
-El siguiente diagrama ha sido diseñado siguiendo rigurosamente las pautas de [Diagram Design de Cathryn Lavery](https://github.com/cathrynlavery/diagram-design), con un enfoque minimalista editorial, alineación precisa en grilla divisible por 4, tipografía Geist/Instrument Serif y énfasis focal selectivo.
+El siguiente diagrama describe la arquitectura general del sistema siguiendo las pautas de [Diagram Design de Cathryn Lavery](https://github.com/cathrynlavery/diagram-design), con un enfoque minimalista editorial, alineación precisa en grilla divisible por 4, tipografía Geist/Instrument Serif y énfasis focal selectivo.
 
-```xml
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="blueprint-title blueprint-desc">
   <title id="blueprint-title">ID Smile Fullstack Blueprint</title>
   <desc id="blueprint-desc">Architectural blueprint of the ID Smile dual-version workspace ecosystem, built following professional diagram-design guidelines.</desc>
@@ -137,7 +136,342 @@ El siguiente diagrama ha sido diseñado siguiendo rigurosamente las pautas de [D
   <text x="680" y="380" class="callout-text">X-Robots-Tag: noindex, nofollow</text>
   <text x="680" y="396" class="callout-text">headers at Vercel Edge</text>
 </svg>
-```
+
+---
+
+## 🗺️ Sitemap & User Flow Blueprint
+Este diagrama ilustra las rutas de usuario, la navegación interactiva, las secciones de contenido de la marca (áreas), los llamados a la acción (CTAs) y cómo se interconectan los entregables dentro de la plataforma.
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="sitemap-title">
+  <title id="sitemap-title">ID Smile Sitemap &amp; Flow Blueprint</title>
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Geist+Mono:wght@400;500;600&amp;family=Geist:wght@400;500;600&amp;display=swap');
+      .bg { fill: #0C242B; }
+      .text-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; fill: #FAF7F2; text-anchor: middle; font-weight: 800; letter-spacing: -0.02em; }
+      .text-subtitle { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; text-anchor: middle; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+      .node-border { stroke: #1D4451; stroke-width: 1; fill: #11333C; }
+      .node-border-focal { stroke: #D2506B; stroke-width: 1.2; fill: #1C2E34; }
+      .node-border-accent { stroke: #2E9AA0; stroke-width: 1.2; fill: #113840; }
+      .node-title { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #FAF7F2; }
+      .node-title-focal { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #D2506B; }
+      .node-title-accent { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #2E9AA0; }
+      .node-sub { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; }
+      .node-tech { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #2E9AA0; }
+      .node-tech-muted { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #8FB6BD; opacity: 0.8; }
+      .edge { fill: none; stroke: #8FB6BD; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-muted-s); }
+      .edge-focal { fill: none; stroke: #D2506B; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-accent-s); }
+      .edge-accent { fill: none; stroke: #2E9AA0; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-aqua-s); }
+      .edge-label { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #FAF7F2; text-anchor: middle; }
+    </style>
+    <marker id="arrow-muted-s" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#8FB6BD" />
+    </marker>
+    <marker id="arrow-accent-s" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#D2506B" />
+    </marker>
+    <marker id="arrow-aqua-s" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#2E9AA0" />
+    </marker>
+    <pattern id="dotgrid-s" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="rgba(46, 154, 160, 0.12)" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="480" class="bg" />
+  <rect width="800" height="480" fill="url(#dotgrid-s)" />
+
+  <text x="400" y="36" class="text-title">SITEMAP, RUTAS Y INTERCONEXIONES</text>
+  <text x="400" y="52" class="text-subtitle">MAPA DE FLUJO, ÁREAS DE MARCA Y ACCIONES (CTAs)</text>
+
+  <!-- Entry -->
+  <rect x="40" y="212" width="112" height="56" rx="6" class="node-border" />
+  <text x="52" y="232" class="node-title">USER ENTRY</text>
+  <text x="52" y="244" class="node-sub">HTTP GET /</text>
+  <text x="52" y="256" class="node-tech">Clean paths on Edge</text>
+
+  <!-- Switcher -->
+  <rect x="192" y="188" width="128" height="104" rx="6" class="node-border-focal" />
+  <text x="204" y="212" class="node-title-focal">DYNAMIC ROUTER</text>
+  <text x="204" y="228" class="node-sub">preferred-version</text>
+  <text x="204" y="244" class="node-tech-muted">Vercel Server Clean-URLs</text>
+  <text x="204" y="256" class="node-tech-muted">GitHub Pages Fallback</text>
+  <text x="204" y="272" class="node-tech">localStorage Sync</text>
+
+  <!-- MVP Landing -->
+  <rect x="360" y="80" width="128" height="56" rx="6" class="node-border" />
+  <text x="372" y="100" class="node-title">SITIO MVP (Estático)</text>
+  <text x="372" y="112" class="node-sub">/index.html</text>
+  <text x="372" y="124" class="node-tech">Pure HTML5 / CSS3 / JS</text>
+
+  <!-- V1 Premium Landing -->
+  <rect x="360" y="344" width="128" height="56" rx="6" class="node-border" />
+  <text x="372" y="364" class="node-title">SITIO V1 (React Redesign)</text>
+  <text x="372" y="376" class="node-sub">/v1.html</text>
+  <text x="372" y="388" class="node-tech">Interactive Premium UI</text>
+
+  <!-- Hub / Workspace -->
+  <rect x="360" y="212" width="128" height="56" rx="6" class="node-border-accent" />
+  <text x="372" y="232" class="node-title-accent">HUB &amp; VISUALIZER</text>
+  <text x="372" y="244" class="node-sub">/hub.html &amp; /viewer</text>
+  <text x="372" y="256" class="node-tech">SPA Unified Workspace</text>
+
+  <!-- MVP Areas -->
+  <rect x="528" y="80" width="128" height="56" rx="6" class="node-border" />
+  <text x="540" y="100" class="node-title">MVP SECCIONES</text>
+  <text x="540" y="112" class="node-sub">Hero, Carousel, Testim</text>
+  <text x="540" y="124" class="node-tech">Ultra-fast Mobile Loading</text>
+
+  <!-- V1 Areas -->
+  <rect x="528" y="344" width="128" height="56" rx="6" class="node-border" />
+  <text x="540" y="364" class="node-title">V1 SECCIONES</text>
+  <text x="540" y="376" class="node-sub">Premium Hero, Dx Map, Tour</text>
+  <text x="540" y="388" class="node-tech">Dynamic React state</text>
+
+  <!-- Workspace Deliverables Map -->
+  <rect x="528" y="212" width="128" height="56" rx="6" class="node-border-accent" />
+  <text x="540" y="232" class="node-title-accent">10 ENTEGABLES MAP</text>
+  <text x="540" y="244" class="node-sub">Clinical Dx, BMC, Prompts</text>
+  <text x="540" y="256" class="node-tech">Dynamic Markdown fetch</text>
+
+  <!-- MVP CTA -->
+  <rect x="684" y="80" width="88" height="56" rx="6" class="node-border-focal" />
+  <text x="696" y="100" class="node-title-focal">⚡ CTA MVP</text>
+  <text x="696" y="112" class="node-sub">WhatsApp</text>
+  <text x="696" y="124" class="node-tech">One-click Lead</text>
+
+  <!-- V1 CTA -->
+  <rect x="684" y="344" width="88" height="56" rx="6" class="node-border-focal" />
+  <text x="696" y="364" class="node-title-focal">⚡ CTA V1</text>
+  <text x="696" y="376" class="node-sub">Scheduler</text>
+  <text x="696" y="388" class="node-tech">Calendly Modal</text>
+
+  <!-- Workspace Outputs -->
+  <rect x="684" y="212" width="88" height="56" rx="6" class="node-border-accent" />
+  <text x="696" y="232" class="node-title-accent">🔒 OUTPUT</text>
+  <text x="696" y="244" class="node-sub">Clinical Sandbox</text>
+  <text x="696" y="256" class="node-tech">NoIndex IP</text>
+
+  <!-- Edges -->
+  <path d="M 152 240 L 192 240" class="edge" />
+  <path d="M 320 216 L 340 216 L 340 108 L 360 108" class="edge" />
+  <path d="M 320 264 L 340 264 L 340 372 L 360 372" class="edge" />
+  <path d="M 320 240 L 360 240" class="edge-accent" />
+
+  <path d="M 488 108 L 528 108" class="edge" />
+  <path d="M 488 372 L 528 372" class="edge" />
+  <path d="M 488 240 L 528 240" class="edge-accent" />
+
+  <path d="M 656 108 L 684 108" class="edge-focal" />
+  <path d="M 656 372 L 684 372" class="edge-focal" />
+  <path d="M 656 240 L 684 240" class="edge-accent" />
+</svg>
+
+---
+
+## 🗺️ Repository Directory Structure & Tech Stack
+Este diagrama de arquitectura técnica representa la estructura del repositorio de código estático, la organización de archivos de ID Smile y Diagnosticadoc, y el stack tecnológico utilizado en cada capa.
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="repo-title">
+  <title id="repo-title">ID Smile Repository Structure Blueprint</title>
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Geist+Mono:wght@400;500;600&amp;family=Geist:wght@400;500;600&amp;display=swap');
+      .bg { fill: #0C242B; }
+      .text-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; fill: #FAF7F2; text-anchor: middle; font-weight: 800; letter-spacing: -0.02em; }
+      .text-subtitle { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; text-anchor: middle; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+      .container-border { stroke: #1D4451; stroke-width: 1; fill: #08191E; }
+      .node-border { stroke: #1D4451; stroke-width: 1; fill: #11333C; }
+      .node-border-focal { stroke: #D2506B; stroke-width: 1.2; fill: #1C2E34; }
+      .node-border-accent { stroke: #2E9AA0; stroke-width: 1.2; fill: #113840; }
+      .node-title { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #FAF7F2; }
+      .node-title-focal { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #D2506B; }
+      .node-title-accent { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #2E9AA0; }
+      .node-sub { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; }
+      .node-tech { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #2E9AA0; }
+      .edge { fill: none; stroke: #8FB6BD; stroke-width: 1; stroke-dasharray: 2,2; }
+    </style>
+    <pattern id="dotgrid-r" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="rgba(46, 154, 160, 0.12)" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="480" class="bg" />
+  <rect width="800" height="480" fill="url(#dotgrid-r)" />
+
+  <text x="400" y="36" class="text-title">ESTRUCTURA DE REPOSITORIO Y STACK</text>
+  <text x="400" y="52" class="text-subtitle">MAPA DE DIRECTORIOS, CÓDIGO Y COMPONENTES TÉCNICOS</text>
+
+  <!-- Root Directory Box -->
+  <rect x="40" y="96" width="720" height="344" rx="8" class="container-border" />
+  <text x="56" y="116" class="node-title-accent" style="font-size: 13px;">REPOSITORY ROOT /</text>
+
+  <!-- Folder scripts/ -->
+  <rect x="64" y="136" width="216" height="88" rx="6" class="node-border" />
+  <text x="76" y="156" class="node-title">📁 /scripts/</text>
+  <text x="76" y="172" class="node-sub">auto-setup.js</text>
+  <text x="76" y="188" class="node-tech-muted" style="fill:#8FB6BD;">Local environment validation</text>
+  <text x="76" y="200" class="node-tech">Node.js ES6 Scripting</text>
+
+  <!-- Folder diagnosticadoc/ -->
+  <rect x="64" y="248" width="216" height="160" rx="6" class="node-border" />
+  <text x="76" y="268" class="node-title">📁 /diagnosticadoc/</text>
+  <text x="76" y="284" class="node-sub">SKILL.md (Metaprompt)</text>
+  <text x="76" y="300" class="node-tech-muted" style="fill:#8FB6BD;">• diagnosticadoc.skill</text>
+  <text x="76" y="316" class="node-sub">/references/</text>
+  <text x="92" y="332" class="node-tech-muted" style="fill:#8FB6BD;">- benchmarks-dental-mx.md</text>
+  <text x="92" y="344" class="node-tech-muted" style="fill:#8FB6BD;">- landing-pages-engineering.md</text>
+  <text x="92" y="356" class="node-tech-muted" style="fill:#8FB6BD;">- outreach-y-medicion.md</text>
+  <text x="76" y="376" class="node-tech">Strategic Clinical Prompts</text>
+
+  <!-- Core HTML Files -->
+  <rect x="304" y="136" width="216" height="272" rx="6" class="node-border-focal" />
+  <text x="316" y="160" class="node-title-focal">📄 CORE WEBPAGES</text>
+  <text x="316" y="180" class="node-sub">index.html (MVP Landing)</text>
+  <text x="316" y="196" class="node-sub">v1.html (React Redesign)</text>
+  <text x="316" y="212" class="node-sub">viewer.html (Strategic Workspace)</text>
+  <text x="316" y="228" class="node-sub">hub.html (Deliverables Portal)</text>
+  <text x="316" y="244" class="node-sub">navigator.js (Floating Menu Widget)</text>
+  <text x="316" y="260" class="node-sub">support.js (Helper &amp; Shared Code)</text>
+  <text x="316" y="276" class="node-sub">*.html (Dx, BMC, Dashboards)</text>
+  <text x="316" y="300" class="node-tech-muted" style="fill:#8FB6BD;">Vanilla ES6+, HTML5 Canvas, SVG</text>
+  <text x="316" y="312" class="node-tech-muted" style="fill:#8FB6BD;">Bricolage Grotesque Google Fonts</text>
+  <text x="316" y="332" class="node-sub">Markdown Strategics:</text>
+  <text x="316" y="348" class="node-tech-muted" style="fill:#8FB6BD;">- mensaje-wa-bundle.md</text>
+  <text x="316" y="360" class="node-tech-muted" style="fill:#8FB6BD;">- analytics-kpis-instrumentacion.md</text>
+  <text x="316" y="372" class="node-tech-muted" style="fill:#8FB6BD;">- checklist-evidencia.md</text>
+  <text x="316" y="392" class="node-tech">Fullstack Presentation Layer</text>
+
+  <!-- Core Configs -->
+  <rect x="544" y="136" width="192" height="272" rx="6" class="node-border-accent" />
+  <text x="556" y="160" class="node-title-accent">⚙️ CONFIGURATION</text>
+  <text x="556" y="180" class="node-sub">vercel.json</text>
+  <text x="556" y="196" class="node-tech-muted" style="fill:#8FB6BD;">- cleanUrls: true</text>
+  <text x="556" y="208" class="node-tech-muted" style="fill:#8FB6BD;">- trailingSlash: false</text>
+  <text x="556" y="220" class="node-tech-muted" style="fill:#8FB6BD;">- X-Robots-Tag Headers</text>
+  <text x="556" y="240" class="node-sub">.github/workflows/</text>
+  <text x="568" y="256" class="node-tech-muted" style="fill:#8FB6BD;">- deploy.yml</text>
+  <text x="568" y="268" class="node-tech-muted" style="fill:#8FB6BD;">• auto-setup Node 22</text>
+  <text x="568" y="280" class="node-tech-muted" style="fill:#8FB6BD;">• bot-approval workflow</text>
+  <text x="568" y="292" class="node-tech-muted" style="fill:#8FB6BD;">• vercel preview build</text>
+  <text x="568" y="304" class="node-tech-muted" style="fill:#8FB6BD;">• github pages deploy</text>
+  <text x="556" y="324" class="node-sub">DEPLOYMENT.md</text>
+  <text x="556" y="340" class="node-tech-muted" style="fill:#8FB6BD;">- DevLog &amp; Deployment Manual</text>
+  <text x="556" y="360" class="node-sub">README.md</text>
+  <text x="556" y="376" class="node-tech-muted" style="fill:#8FB6BD;">- Blueprint Onepager</text>
+  <text x="556" y="396" class="node-tech">Infrastructure-as-Code (IaC)</text>
+
+  <!-- Connectors -->
+  <path d="M 280 180 L 304 180" class="edge" />
+  <path d="M 280 328 L 304 328" class="edge" />
+  <path d="M 520 272 L 544 272" class="edge" />
+</svg>
+
+---
+
+## 🗺️ CI/CD Deployment Pipeline & Multi-Cloud Architecture
+Este blueprint muestra el ciclo de vida del despliegue, la validación estática paralela de código, y cómo se aprovisionan y sincronizan los hosts redundantes (Vercel Edge y GitHub Pages) para garantizar tolerancia a fallos.
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="100%" height="100%" style="border-radius: 8px; background: #0C242B;" role="img" aria-labelledby="deploy-title">
+  <title id="deploy-title">ID Smile Deployment Pipeline Blueprint</title>
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=Geist+Mono:wght@400;500;600&amp;family=Geist:wght@400;500;600&amp;display=swap');
+      .bg { fill: #0C242B; }
+      .text-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; fill: #FAF7F2; text-anchor: middle; font-weight: 800; letter-spacing: -0.02em; }
+      .text-subtitle { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; text-anchor: middle; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+      .node-border { stroke: #1D4451; stroke-width: 1; fill: #11333C; }
+      .node-border-focal { stroke: #D2506B; stroke-width: 1.2; fill: #1C2E34; }
+      .node-border-accent { stroke: #2E9AA0; stroke-width: 1.2; fill: #113840; }
+      .node-title { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #FAF7F2; }
+      .node-title-focal { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #D2506B; }
+      .node-title-accent { font-family: 'Geist', sans-serif; font-size: 11px; font-weight: 600; fill: #2E9AA0; }
+      .node-sub { font-family: 'Geist Mono', monospace; font-size: 9px; fill: #8FB6BD; }
+      .node-tech { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #2E9AA0; }
+      .node-tech-muted { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #8FB6BD; opacity: 0.8; }
+      .edge { fill: none; stroke: #8FB6BD; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-muted-d); }
+      .edge-focal { fill: none; stroke: #D2506B; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-accent-d); }
+      .edge-accent { fill: none; stroke: #2E9AA0; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-aqua-d); }
+      .edge-label { font-family: 'Geist Mono', monospace; font-size: 8px; fill: #FAF7F2; text-anchor: middle; }
+    </style>
+    <marker id="arrow-muted-d" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#8FB6BD" />
+    </marker>
+    <marker id="arrow-accent-d" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#D2506B" />
+    </marker>
+    <marker id="arrow-aqua-d" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 6 4 L 0 7 z" fill="#2E9AA0" />
+    </marker>
+    <pattern id="dotgrid-d" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="rgba(46, 154, 160, 0.12)" />
+    </pattern>
+  </defs>
+
+  <rect width="800" height="480" class="bg" />
+  <rect width="800" height="480" fill="url(#dotgrid-d)" />
+
+  <text x="400" y="36" class="text-title">CI/CD PIPELINE Y MULTI-CLOUD HOSTING</text>
+  <text x="400" y="52" class="text-subtitle">FLUJO DE TRABAJO AUTOMATIZADO, VALIDACIÓN Y ARQUITECTURA DE DESPLIEGUE Redundante</text>
+
+  <!-- Git Commit Trigger -->
+  <rect x="40" y="212" width="112" height="56" rx="6" class="node-border" />
+  <text x="52" y="232" class="node-title">GIT TRIGGER</text>
+  <text x="52" y="244" class="node-sub">Push or PR to main</text>
+  <text x="52" y="256" class="node-tech">GitHub Actions Webhook</text>
+
+  <!-- GitHub Runner -->
+  <rect x="192" y="144" width="136" height="192" rx="6" class="node-border-focal" />
+  <text x="204" y="168" class="node-title-focal">GHA WORKFLOW RUNNER</text>
+  <text x="204" y="184" class="node-sub">deploy.yml (Node 22)</text>
+  <text x="204" y="200" class="node-tech-muted">• Checkout Code</text>
+  <text x="204" y="212" class="node-tech-muted">• Run static analyses</text>
+  <text x="204" y="224" class="node-tech-muted">• Build validation matrix</text>
+  <text x="204" y="240" class="node-sub">Automated Bot-PR Review</text>
+  <text x="204" y="256" class="node-tech-muted">• Direct review approval</text>
+  <text x="204" y="268" class="node-tech-muted">• Fallback feedback comment</text>
+  <text x="204" y="284" class="node-tech-muted">Fast feedback loops</text>
+  <text x="204" y="304" class="node-tech">CI/CD Automation Engine</text>
+
+  <!-- Auto Setup & Validation -->
+  <rect x="368" y="144" width="136" height="192" rx="6" class="node-border-accent" />
+  <text x="380" y="168" class="node-title-accent">AUTO-SETUP &amp; MATRIX</text>
+  <text x="380" y="184" class="node-sub">scripts/auto-setup.js</text>
+  <text x="380" y="200" class="node-tech-muted">• Node local healthchecks</text>
+  <text x="380" y="212" class="node-tech-muted">• HTML files checklist</text>
+  <text x="380" y="224" class="node-tech-muted">• Broken path verifications</text>
+  <text x="380" y="240" class="node-sub">Vercel AI Context Plugin</text>
+  <text x="380" y="256" class="node-tech-muted">• Plugins injection</text>
+  <text x="380" y="268" class="node-tech-muted">• Non-interactive auto-init</text>
+  <text x="380" y="284" class="node-tech-muted">Pre-flight check passed</text>
+  <text x="380" y="304" class="node-tech">Validation &amp; Integrity</text>
+
+  <!-- Vercel Edge Target -->
+  <rect x="544" y="80" width="216" height="120" rx="6" class="node-border" />
+  <text x="556" y="104" class="node-title">HOST 1: VERCEL PRODUCTION</text>
+  <text x="556" y="120" class="node-sub">Global Edge Server (Serverless)</text>
+  <text x="556" y="136" class="node-tech-muted">• vercel pull &amp; vercel build</text>
+  <text x="556" y="148" class="node-tech-muted">• High speed CDN caching</text>
+  <text x="556" y="160" class="node-tech-muted">• X-Robots-Tag: noindex, nofollow</text>
+  <text x="556" y="172" class="node-tech-muted">• Clean-URL rewriting</text>
+  <text x="556" y="188" class="node-tech">Production Clean-URLs Host</text>
+
+  <!-- GitHub Pages Target -->
+  <rect x="544" y="280" width="216" height="120" rx="6" class="node-border" />
+  <text x="556" y="304" class="node-title">HOST 2: GITHUB PAGES</text>
+  <text x="556" y="320" class="node-sub">Static Redundant Mirror (CDN)</text>
+  <text x="556" y="336" class="node-tech-muted">• configure-pages &amp; upload-pages</text>
+  <text x="556" y="348" class="node-tech-muted">• environment: github-pages</text>
+  <text x="556" y="360" class="node-tech-muted">• url outputs tracking</text>
+  <text x="556" y="372" class="node-tech-muted">• physical fallbacks mapped on load</text>
+  <text x="556" y="388" class="node-tech">Alternative Redundant Host</text>
+
+  <!-- Connectors -->
+  <path d="M 152 240 L 192 240" class="edge" />
+  <path d="M 328 240 L 368 240" class="edge-focal" />
+  <path d="M 504 216 L 524 216 L 524 140 L 544 140" class="edge" />
+  <path d="M 504 264 L 524 264 L 524 340 L 544 340" class="edge" />
+</svg>
 
 ---
 
@@ -155,9 +489,9 @@ Para optimizar costos, mitigar riesgos y acelerar el tiempo de lanzamiento, impl
 
 ### 2. Workspace de Visualización Unificado y Extensible (`viewer.html` / `hub.html`)
 Ofrece un panel de control interactivo para interactuar directamente con los 10 entregables estratégicos de ID Smile:
-* **Lector Markdown Integrado:** Implementa un parser de Markdown super-liviano escrito en Vanilla JS puro que convierte dinámicamente los archivos tácticos `.md` a HTML estructurado sin bibliotecas externas.
+* **Lector Markdown Integrado:** Implementa un parser de Markdown super-liviano escrito en Vanilla JS puro que convierte dinámicamente los archivos tácticos `.md` a HTML structured sin bibliotecas externas.
 * **Simulador de Dispositivo Dual:** Permite alternar la previsualización del sitio móvil y desktop dentro de un iframe interactivo con marcos realistas de hardware.
-* **Localhost Clean-URL Resolver:** Mapea automáticamente URLs limpias de producción (como `/dashboard`) a archivos locales reales (como `/dashboard-operativo-id-smile.html`) de forma transparente para simplificar el testing fuera del servidor edge.
+* **Localhost Clean-URL Resolver & Cross-Platform Path Mapper:** Mapea automáticamente URLs limpias de producción (como `/dashboard`) a archivos locales reales (como `/dashboard-operativo-id-smile.html`) de forma transparente en ambientes de prueba o GitHub Pages, garantizando que el 100% de los links interconecten perfectamente sin 404s en ninguna plataforma.
 
 ### 3. Seguridad de IP Médica en Servidor Edge & CI/CD
 Toda la documentación estratégica y los borradores clínicos están blindados contra indexación pública accidental:
