@@ -101,7 +101,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: pr.number,
-                  body: '🤖 **Automated Validation Passed**: All automated setup checks and validations have passed successfully.\n\n*Note: Automatic PR approval was skipped because GitHub Actions does not have permission to approve PRs directly.*'
+                  body: '🤖 **Automated Validation Passed**: All automated setup checks and validations have passed successfully.\n\n*Note: Automatic PR approval was skipped because GitHub Actions does not have the required permissions in this context.*'
                 });
                 console.log('✅ Fallback validation comment submitted successfully.');
               }
@@ -168,6 +168,27 @@ jobs:
 
       - name: Set up Pages
         uses: actions/configure-pages@v5
+
+      - name: Clean up stale github-pages artifacts
+        continue-on-error: true
+        run: |
+          # Delete any prior artifacts from this run to prevent "Multiple artifacts" conflict
+          ARTIFACT_IDS=$(gh run view ${{ github.run_id }} --json artifacts -q '.artifacts[] | select(.name=="github-pages") | .id' 2>/dev/null)
+          
+          if [ -n "$ARTIFACT_IDS" ]; then
+            echo "Cleaning up stale github-pages artifacts..."
+            echo "$ARTIFACT_IDS" | while read ARTIFACT_ID; do
+              if [ -n "$ARTIFACT_ID" ]; then
+                echo "Deleting artifact ID: $ARTIFACT_ID"
+                gh api -X DELETE repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/$ARTIFACT_ID || true
+              fi
+            done
+            echo "Cleanup completed"
+          else
+            echo "No stale artifacts found"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
