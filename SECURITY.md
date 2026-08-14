@@ -1,58 +1,56 @@
 # 🛡️ Arquitectura de Seguridad, Privacidad y Conmutación en 3 Capas
-### *ID Smile & diagnosticadoc.com — Workspace de Entregables Estratégicos*
+### *ID Smile & diagnosticadoc.com — Matriz de Privacidad y Separación de Información*
 
-Este documento describe la especificación técnica, de diseño y operativa del sistema de seguridad de **3 Capas de Protección** implementado en el Workspace de ID Smile. Este sistema blinda la propiedad intelectual clínica, la bitácora operativa, el Business Model Canvas y los documentos estratégicos de la marca contra accesos no autorizados, indexación accidental, descargas locales y capturas de pantalla, manteniendo las landings públicas de conversión 100% descubribles y veloces.
+Este documento describe la especificación técnica, de diseño y operativa del sistema de seguridad de **3 Capas de Protección** implementado en el Workspace de ID Smile. Este modelo segrega de forma estricta los activos públicos de captación de pacientes frente a los entregables del cliente, la bitácora operativa de dashboards internos, y la documentación táctica en Markdown, garantizando el cumplimiento de la directiva `noindex, nofollow` tanto a nivel HTML como en el servidor Edge de Vercel.
 
 ---
 
-## 🗺️ Visión General de la Separación de Áreas
+## 🗺️ Matriz de Visibilidad e Información Separada (Rutas Noindexadas)
 
-La plataforma de ID Smile opera bajo una **Arquitectura de Coexistencia de Versiones** distribuida en dos grandes zonas de visibilidad:
+Hemos dividido el repositorio de ID Smile en **4 niveles diferenciados de acceso y visibilidad** para separar estratégicamente el tráfico público del paciente, el workspace interactivo del clínico, el dashboard interno de control y el repositorio de documentos técnicos:
 
-```
-                  ┌─────────────────────────────────────────┐
-                  │          ENTRADA GENERAL / GET /        │
-                  └────────────────────┬────────────────────┘
-                                       │
-                    Is Public Page? (index.html / v1.html)
-                                      / \
-                                     /   \
-                               Sí   /     \ No (hub.html, viewer.html, etc.)
-                                   /       \
-                                  ▼         ▼
-             ┌────────────────────────┐  ┌────────────────────────┐
-             │       ÁREA PÚBLICA     │  │   WORKSPACE INTERNO    │
-             │   - Landing MVP        │  │   - Hub de Entregables │
-             │   - Landing V1 React   │  │   - Visualizador SPA   │
-             │                        │  │   - Nota de Dx Clínico │
-             │   * Navegador oculto   │  │   - Dashboard Operativo│
-             │   * Sin restricciones  │  │   - Business Canvas    │
-             │   * SEO indexable      │  │   - Docs Markdown (.md)│
-             └───────────┬────────────┘  └───────────┬────────────┘
-                         │                           │
-              Shift+DblClick Trigger              Is Authorized?
-                         │                          / \
-                         ▼                         /   \
-                 [ Prompt Passkey ]               /     \
-                         │                   Sí  /       \ No
-                         ▼                      /         \
-                 [ Unlocked State ]            ▼           ▼
-                                       ┌──────────────┐  ┌──────────────┐
-                                       │ ACCESO LIBRE │  │ PANTALLA DE  │
-                                       │ + IP SHIELD  │  │ BLOQUEO (L1) │
-                                       └──────────────┘  └──────────────┘
-```
+| Nivel de Información | Propósito Estratégico | Archivo(s) Físico(s) | Ruta Limpia (Vercel) | Indexable (SEO) | Meta Robots / X-Robots-Tag | Capa L1 Gatekeeper | Capa L3 IP Shield / Watermark |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. Área Pública** | Conversiones de pacientes, velocidad y SEO | `index.html`<br>`v1.html` | `/`<br>`/v1` | **Sí** | `index, follow` (Permitido) | No (Oculto) | No (Área Libre) |
+| **2. Client Workspace** | Entregables interactivos para el Dr/Director | `dx-digital-smile-ortodoncia.html`<br>`business-model-canvas-id-smile.html` | `/dx`<br>`/bmc` | **No** | `noindex, nofollow` | **Sí** (Passkey) | **Sí** (Watermark & Copy Block) |
+| **3. Operational Dashboard** | Bitácora interna de desarrollo, métricas y KPIs | `dashboard-operativo-id-smile.html`<br>`viewer.html` *(SPA)* | `/dashboard`<br>`/viewer` | **No** | `noindex, nofollow` | **Sí** (Passkey) | **Sí** (Watermark & Copy Block) |
+| **4. Tactical Document Repo** | Estrategia de Outreach, Metaprompts y Referencias | `*.md`<br>`diagnosticadoc/**/*.md` | `/viewer?doc=...`<br>`/*.md` | **No** | `noindex, nofollow` | **Sí** (Passkey) | **Sí** (Watermark & Copy Block) |
 
-### 1. Área Pública (Landing Pages)
-* **Objetivo:** Atracción de pacientes, agendamiento rápido por WhatsApp y posicionamiento en buscadores (SEO).
-* **Archivos:** `index.html` (Prototipo MVP estático) y `v1.html` (Rediseño premium interactivo en React).
-* **Comportamiento de Seguridad:** No se aplican restricciones de copia ni watermarks. El floating navigator se mantiene **completamente invisible** para no dar pistas del directorio interno a pacientes generales.
+---
 
-### 2. Workspace Interno (Deliverables de Diagnóstico)
-* **Objetivo:** Espacio interactivo y de soporte analítico reservado para el clínico tratante y el equipo de operaciones.
-* **Archivos:** `hub.html` (Deliverable Hub), `viewer.html` (Workspace SPA), `dx-digital-smile-ortodoncia.html` (Nota de Diagnóstico Clínico), `dashboard-operativo-id-smile.html` (Bitácora de Control) y `business-model-canvas-id-smile.html` (Canvas Comercial).
-* **Documentos de Soporte (.md):** Todos los archivos de estrategia y guías técnicas en Markdown (`mensaje-wa-bundle.md`, `analytics-kpis-instrumentacion.md`, etc., incluyendo referencias en `diagnosticadoc/`).
-* **Comportamiento de Seguridad:** Bloqueo completo por Gatekeeper a nivel de renderizado (Capitaneado por `navigator.js`), con aplicación permanente del IP Shield una vez desbloqueado.
+## 📂 Detalle de Niveles de Acceso y Rutas
+
+### Nivel 1: Área Pública (Public Conversions)
+* **Descripción:** Espacio abierto y optimizado para tráfico móvil y pacientes.
+* **Rutas Físicas y Limpias:**
+  * `/index.html` o `/` ── Landing Page MVP (Estático de Carga Rápida).
+  * `/v1.html` o `/v1` ── Prototipo Rediseño Premium V1 (React).
+* **Control de indexación:** Totalmente visible. Optimizado para indexadores web de motores de búsqueda.
+* **Comportamiento Stealth:** El floating navigator flotante está **100% oculto** por defecto. No existe visibilidad pública de las carpetas internas de diagnóstico para el paciente casual.
+
+### Nivel 2: Workspace de Entregables del Cliente (Client Workspace)
+* **Descripción:** Los diagnósticos clínicos e historias de negocio destinados a ser compartidos formalmente con el cliente (ortodoncistas, dueños de la clínica).
+* **Rutas Físicas y Limpias:**
+  * `/dx-digital-smile-ortodoncia.html` o `/dx` ── Nota de Diagnóstico Clínico Digital con Arcada SVG Interactiva.
+  * `/business-model-canvas-id-smile.html` o `/bmc` ── Business Model Canvas Estratégico.
+* **Control de indexación:** Blindado contra motores de búsqueda usando etiquetas `<meta name="robots" content="noindex, nofollow">` en el `<head>` de los HTMLs y la regla global `X-Robots-Tag: noindex, nofollow` en `vercel.json` para las rutas `/dx` y `/bmc`.
+* **Seguridad:** Requiere de autorización de la Capa 1 y aplica Copy Blocker y Watermark Tiled (Capa 3).
+
+### Nivel 3: Dashboard Operativo e Instrumentación de KPIs (Operations Space)
+* **Descripción:** Panel de control de uso estrictamente interno del equipo técnico y de Growth para monitorear el Gantt, devlogs y métricas de desempeño.
+* **Rutas Físicas y Limpias:**
+  * `/dashboard-operativo-id-smile.html` o `/dashboard` ── Dashboard Operativo de 12 semanas.
+  * `/viewer.html` o `/viewer` ── Workspace Visualizador SPA central de entregables.
+* **Control de indexación:** Enrutado estrictamente con políticas `noindex, nofollow` a nivel HTML y reglas de cabeceras de servidor Edge Vercel en `vercel.json` para `/dashboard` y `/viewer`.
+* **Seguridad:** Requiere obligatoriamente autorización de la Capa 1 (Passkey) y aplica IP Shielding (Capa 3).
+
+### Nivel 4: Repositorio de Documentación Táctica (Technical Document Repo)
+* **Descripción:** Archivos de documentación técnica, planes de abordaje, metaprompts y benchmarks del vertical de ortodoncia.
+* **Rutas Físicas y Limpias:**
+  * Root `.md` files (como `mensaje-wa-bundle.md`, `analytics-kpis-instrumentacion.md`, `checklist-evidencia.md`, `DEPLOYMENT.md`).
+  * Subdirectorio de habilidades de Agentes y Benchmarks en `diagnosticadoc/SKILL.md` y `diagnosticadoc/references/*.md`.
+* **Control de indexación:** El archivo `vercel.json` asocia la cabecera HTTP `X-Robots-Tag: noindex, nofollow` de manera granular a todos los archivos que coincidan con la expresión regular `/(.*)\.md` y al directorio `/diagnosticadoc/:path*`.
+* **Seguridad:** No pueden ser cargados en texto plano o visualizados a través de `/viewer` a menos que se cuente con la autorización del Gatekeeper.
 
 ---
 
@@ -64,7 +62,7 @@ El motor de control de accesos y protección intelectual se centraliza de manera
 Actúa como la aduana de seguridad para todos los recursos internos.
 
 * **Ocultación de Contenido sin Flash (Anti-FOUC):**
-  Si el visitante intenta ingresar directamente a una ruta del Workspace Interno sin estar autorizado, se inyecta dinámicamente un bloque de estilos CSS agresivo directamente en el elemento `<html>`:
+  Si el visitante intenta ingresar directamente a una ruta de los Niveles 2, 3 o 4 sin estar autorizado, se inyecta dinámicamente un bloque de estilos CSS agresivo directamente en el elemento `<html>`:
   ```css
   body > :not(#ids-lock-screen) {
     display: none !important;
@@ -123,7 +121,7 @@ Diseñado para mitigar la fuga de información sensible, descargas accidentales 
 * **Watermark Visual Tiled (Marca de Agua Monospace Diagonal):**
   Genera un overlay de pantalla completa inamovible, transparente al puntero (`pointer-events: none`) con un z-index ultra alto (`999999`). Carga una imagen SVG vectorizada dinámicamente con texto repetido y rotado a -25 grados:
   `CONFIDENCIAL - ID SMILE WORKSPACE`
-  La marca de agua es semi-transparente (`opacity: 0.035`) y utiliza un gris táctico neutral (`#5A6A70`), haciéndola perfectamente visible y legible tanto en las páginas de tema oscuro (Teal clínico) como en los documentos claros sin obstruir la lectura de gráficos, cronogramas Gantt u hojas de ruta. Cualquier captura de pantalla tomada llevará impresa de forma inamovible la marca de confidencialidad.
+  La marca de agua es semi-transparente (`opacity: 0.035`) y utiliza un gris táctico neutral (`#5A6A70`), haciéndola perfectamente visible y legible tanto en las páginas de tema oscuro (Teal clínico) como en los documentos claros sin obstruir la lectura de gráficos, cronogramas Gantt u hojas de ruta. Cualquier captura de pantalla tomada llevará de forma inamovible la marca de confidencialidad del proyecto.
 
 ---
 
